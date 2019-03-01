@@ -78,13 +78,6 @@ module.exports = function (app, passport) {
   });
 
 
-  app.get('/api/getCentros', function (req, res) {
-    BackPoc.find(function (err, collections) {
-      if (err) return next(err);
-      res.json(collections);
-    });
-  });
-
   // Notificaciones
   /*
   GET: /api/notificaciones 
@@ -93,13 +86,6 @@ module.exports = function (app, passport) {
 
   */
 
-  app.get('/api/notificaciones/timestamp/gte', function (req, res) {
-    Notificaciones.find({ timestamp: { $gte: req.query.timestamp } }, function (err, collections) {
-      if (err) return next(err);
-      res.json(collections);
-    });
-
-  });
 
   app.get('/api/notificaciones', function (req, res) {
     Notificaciones.find(req.query, function (err, collections) {
@@ -108,9 +94,8 @@ module.exports = function (app, passport) {
     });
   });
 
-
   app.param('idNotificacion', function (req, res, next, idNotificacion) {
-    console.log("** * * Param  idNotificacion***", idNotificacion);
+
     Notificaciones.findOne({ '_id': idNotificacion }, function (err, item) {
       if (err) { return next(err); }
       if (!item) { return res.json({ error: "No se encontro la notificacion." }); }
@@ -119,9 +104,8 @@ module.exports = function (app, passport) {
     })
   });
 
-
   app.get('/api/notificaciones/:idNotificacion', function (req, res) {
-    res.jsonp(req.survey);
+    return res.jsonp(req.item);
   });
 
 
@@ -165,6 +149,22 @@ module.exports = function (app, passport) {
     });
   });
 
+
+  app.get('/api/notificaciones/timestamp/gte', function (req, res) {
+    Notificaciones.find({ timestamp: { $gte: req.query.timestamp } }, function (err, collections) {
+      if (err) return next(err);
+      res.json(collections);
+    });
+
+  });
+
+  app.get('/api/getCentros', function (req, res) {
+    BackPoc.find(function (err, collections) {
+      if (err) return next(err);
+      res.json(collections);
+    });
+  });
+
   app.post('/api/notificacionesUsuarios', function (req, res) {
     console.log("req.body", req.body);
     var vNotificacionesUsuario = new NotificacionesUsuarios(req.body);
@@ -177,13 +177,13 @@ module.exports = function (app, passport) {
 
   app.post('/api/appversion', function (req, res) {
     console.log("req.body", req.body);
-
     var vAppVersion = new AppVersion({ version: req.body });
     vAppVersion.save(function (err, post) {
       if (err) { return res.json({ error: err.message }); }
       res.json(post);
     });
   });
+
   app.get('/api/appversion', function (req, res) {
     console.log("req.query", req.query);
     res.json({
