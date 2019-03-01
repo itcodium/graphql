@@ -1,0 +1,86 @@
+<html ng-app="app">
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="../stylesheets/bootstrap.css">
+    <script src="../javascripts/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-resource.min.js"></script>
+    <script src="../javascripts/appversions.js"></script>
+<style>
+div{
+padding:0 5px 0 5px;
+background-color:#eee;
+mmargin-bottom:10px;
+}
+
+</style>
+  </head>
+<body ng-controller="NotificacionesController">
+<div class="alert alert-danger" ng-if="error.error">
+  <strong>Mensaje </strong> {{error.error}}
+</div>
+
+<div class="alert alert-success" ng-if="success.message">
+  {{success.message}}
+</div>
+
+{{version}}
+
+<div id="formulario">
+  <form>
+  <div class="row">
+    <div class="col-sm-4">
+        <div class="form-group">
+          <label  for="cboType">Tipos</label>
+          <select ng-model="type"  id="cboType" class="form-control">
+            <option  ng-repeat="item_type in types" value="{{item_type}}">{{item_type.value}}</option>
+        </select>
+        </div>
+    </div>
+    <div class="col-sm-4">
+         <div class="form-group">
+          <label  for="cboCategory">Categoria</label>
+          <select ng-model="category" id="cboCategory" class="form-control">
+              <option  ng-repeat="category in categories" value="{{category}}">{{category.value}}</option>
+          </select>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="form-group">
+          <label  for="cboInnerId">Inner Id</label>
+          <select ng-model="innerid" id="cboInnerId" class="form-control">
+              <option  ng-repeat="innerid in inner_ids" value="{{innerid}}">{{innerid.value}}</option>
+          </select>
+        </div>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="title">Titulo</label>
+    <input type="text" ng-model="notificacion.title"  class="form-control" id="title">
+  </div>
+  <div class="form-group">
+    <label for="description">Descripcion</label>
+    <textarea ng-model="notificacion.description"  id="description" class="form-control"></textarea> 
+  </div>
+  <div class="form-group">
+    <label for="link">Link</label>
+    <input ng-model="notificacion.link" type="text" class="form-control" id="link">
+  </div>
+  <div class="form-group" style="padding-bottom: 20px;">   
+      <button type="buttom" ng-click="save()"class="btn btn-default">Submit</button>
+
+  </div>
+
+
+  <div style="display: none" class="checkbox">
+    <label><input type="checkbox"> Remember me</label>
+  </div>
+
+ 
+
+  </form>
+</div>
+ 
+    </body>
+</html>

@@ -1,0 +1,27 @@
+<html ng-app="app">
+  <head>
+    <title>My Angular App!</title>
+    <link rel="stylesheet" href="stylesheets/bootstrap.css">
+    <script src="javascripts/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.min.js"></script>
+    <script src="javascripts/factory.js"></script>
+    <style>
+</style>
+  </head>
+  <body>
+
+  <ng-view></ng-view>
+	
+  <script type="text/ng-template" id="/todos.html">
+    <h1 class="page-header">Factory</h1>	
+	*** Search: <input type="text" ng-model="search.name">
+    <ul class="list-group">
+      <li class="list-group-item" ng-repeat="todo in todos | filter: search">
+        <input type="checkbox" ng-model="todo.completed">{{todo.name}}
+      </li>
+    </ul>
+  </script>
+
+  </body>
+</html>
+

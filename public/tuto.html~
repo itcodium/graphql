@@ -1,0 +1,40 @@
+<html ng-app="app">
+  <head>
+    <title>My Angular App!</title>
+    <link rel="stylesheet" href="stylesheets/bootstrap.css">
+    <script src="javascripts/angular.js"></script>
+    <script src="javascripts/tuto.js"></script>
+    <style>
+</style>
+  </head>
+  <body>
+
+<h1>Modules</h1>
+<p>
+Modules are a way to encapsulate different parts of your application (directives, controllers, factories, …) 
+and reuse them in other places. 
+</p>
+<pre>
+  var app = angular.module('app',[]);
+      app.controller('TodoController', ['$scope', function ($scope) {
+	   ...
+	}]);
+  var app = angular.module('app',[]);
+      app.controller('TodoController',function ($scope) {
+	   ...
+	});
+</pre>
+<br>
+
+
+	<div ng-controller="TodoController">
+	  <ul class="list-group">
+	      <li class="list-group-item" ng-repeat="todo in todos">
+	      <input type="checkbox" ng-model="todo.completed">{{ todo.name }}
+	  </li>
+
+	  </ul>
+	</div>
+  </body>
+</html>
+

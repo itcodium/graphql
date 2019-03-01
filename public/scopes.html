@@ -1,0 +1,63 @@
+<html ng-app="app">
+  <head>
+    <title>My Angular App!</title>
+    <link rel="stylesheet" href="stylesheets/bootstrap.css">
+    <script src="javascripts/angular.js"></script>
+    <script src="javascripts/scopes.js"></script>
+    <style>
+
+
+.show-scope-demo.ng-scope,
+.show-scope-demo .ng-scope  {
+  border: 1px solid red;
+  margin: 3px;
+}
+
+
+</style>
+  </head>
+  <body>
+	<div ng-controller="MyController">
+	  Your name:
+	    <input type="text" ng-model="username">
+	    <button ng-click='sayHello()'>greet</button>
+	  <hr>
+	  {{greeting}}
+	</div>
+
+
+	<div class="show-scope-demo">
+	  <div ng-controller="GreetController">
+	    Hello {{name}}!
+	  </div>
+	  <div ng-controller="ListController">
+	    <ol>
+	      <li ng-repeat="name in names">{{name}} from {{department}}</li>
+	    </ol>
+	  </div>
+	</div>
+
+
+
+<div ng-controller="EventController">
+  Root scope <tt>MyEvent</tt> count: {{count}}
+  <ul>
+    <li ng-repeat="i in [1]" ng-controller="EventController">
+      <button ng-click="$emit('MyEvent')">$emit('MyEvent')</button>
+      <button ng-click="$broadcast('MyEvent')">$broadcast('MyEvent')</button>
+      <br>
+      Middle scope <tt>MyEvent</tt> count: {{count}}
+      <ul>
+        <li ng-repeat="item in [1, 2]" ng-controller="EventController">
+          Leaf scope <tt>MyEvent</tt> count: {{count}}
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+
+
+  </body>
+</html>
+

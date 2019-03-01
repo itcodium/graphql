@@ -1,0 +1,70 @@
+<html ng-app="app">
+  <head>
+    <title>My Angular App!</title>
+    <link rel="stylesheet" href="stylesheets/bootstrap.css">
+    <script src="javascripts/angular.js"></script>
+	 <script src="javascripts/controllers.js"></script>
+<style>
+div{
+padding:3px;
+margin-bottom:2px;
+background-color:#eee;
+}
+
+
+div.spicy div {
+  padding: 10px;
+  border: solid 1px #777;
+}
+
+
+
+</style>
+  </head>
+  <body>
+	<div ng-controller="GreetingController">
+	  {{ greeting.text }} world!!
+	</div>
+
+	<div ng-controller="DoubleController">
+	  Two times <input ng-model="num"> equals {{ double(num) }}
+	</div>
+	
+	<div ng-controller="SpicyController">
+	 <button ng-click="chiliSpicy()">Chili</button>
+	 <button ng-click="jalapenoSpicy()">Jalapeño</button>
+	 <p>The food is <b> {{spice}}</b> spicy!</p>
+	</div>
+
+	
+
+	<div ng-controller="SpicyControllerParam">
+	 <input ng-model="customSpice">
+	 <button ng-click="spicy('chili')">Chili</button>
+	 <button ng-click="spicy(customSpice)">Custom spice</button>
+	 <p>The food is <b>{{spice}}</b> spicy!</p>
+	</div>
+
+
+
+	<div class="spicy">
+	  <div ng-controller="MainController">
+	    <p>Good {{timeOfDay}}, {{name}}!</p>
+
+	    <div ng-controller="ChildController">
+	      <p>Good {{timeOfDay}}, {{name}}!</p>
+
+	      <div ng-controller="GrandChildController">
+		<p>Good {{timeOfDay}}, {{name}}!</p>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+
+
+	
+  </body>
+</html>
+
