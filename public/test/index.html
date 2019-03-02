@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Mocha Tests</title>
+
+    <!-- Include Mocha CSS styles -->
+    <link href="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="mocha"></div>
+
+    <!-- Add the Chai assertion library -->
+    <script src="http://chaijs.com/chai.js"></script>
+
+    <!-- Add the Mocha test library -->
+    <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+
+    <script>
+        // Set chai.expect as a global variable
+        var expect = chai.expect;
+
+        // Setup Mocha to use the BDD interface
+        mocha.setup('bdd');
+    </script>
+
+    <!-- Import the sum function -->
+    <script src="/sum.js"></script>
+
+    <!-- Import the tests for the sum function
+    <script src="/sum.test.js"></script>
+    -->
+    <script src="/book.test.js"></script>
+
+
+
+    <script>
+        // Run the tests with Mocha
+        mocha.run();
+    </script>
+
+</body>
+
+</html>

@@ -10,9 +10,39 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 // var debug = require('debug')('flapper-news:server');
 var http = require('http');
-
-
 var app = express();
+
+
+// Graphql Init ----------------------------------------------------------------------
+var graphqlHTTP = require('express-graphql');
+var { buildSchema } = require('graphql');
+
+var schema = buildSchema(`
+  type Query {
+    hello: String,
+    test: String
+  }
+`);
+
+var root = {
+  hello: () => {
+    return 'Hello world!';
+  },
+  test: () => {
+    return 'Hello Testworld!';
+  },
+};
+
+app.use('/api/graphql', graphqlHTTP({
+  schema: schema,
+  rootValue: root,
+  graphiql: true,
+}));
+
+// End Graphql ----------------------------------------------------------------------
+
+
+
 
 var modelsDB = require('./app/models/db')
 
@@ -33,11 +63,6 @@ store.on('error', function (error) {
 
 // Session End -------------------------------------------
 
-
-
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var todos = require('./routes/todos');
 var User = require('./app/models/usuario');
 require('./config/passport')(passport, LocalStrategy, User);
 
@@ -47,13 +72,16 @@ require('./config/passport')(passport, LocalStrategy, User);
 var port = normalizePort(process.env.PORT || '5000');
 app.set('port', port);
 
+
+
+
 var server = http.createServer(app);
 
 console.log("Port", port);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-function normalizePort(val) {
+function normalizePort (val) {
   var port = parseInt(val, 10);
 
   if (isNaN(port)) {
@@ -69,7 +97,7 @@ function normalizePort(val) {
   return false;
 }
 
-function onError(error) {
+function onError (error) {
   if (error.syscall !== 'listen') {
     throw error;
   }
@@ -93,7 +121,7 @@ function onError(error) {
   }
 }
 
-function onListening() {
+function onListening () {
   var addr = server.address();
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr

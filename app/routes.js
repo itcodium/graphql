@@ -6,6 +6,7 @@ module.exports = function (app, passport) {
   var Notificaciones = require('./models/notificaciones');
   var NotificacionesUsuarios = require('./models/notificaciones_usuario');
   var AppVersion = require('./models/apps_versions');
+  var Book = require('./models/book');
   var vDigitlogin = require('./login');
   var https = require("https");
 
@@ -27,7 +28,6 @@ module.exports = function (app, passport) {
   app.use(function (req, res, next) {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     console.log('Client IP:', ip);
-
     next();
   });
 
@@ -80,7 +80,7 @@ module.exports = function (app, passport) {
 
   // Notificaciones
   /*
-  GET: /api/notificaciones 
+  GET: /api/notificaciones
   POST /api/notificaciones
   PUT: /api/notificaciones/:idNotificacion
 
@@ -216,19 +216,14 @@ module.exports = function (app, passport) {
 
 
   app.get('/api/dashboard', function (req, res) {
-
-    function random(low, high) {
+    function random (low, high) {
       return Math.random() * (high - low) + low;
     }
-
     var downloads = random(1, 3) * 145680 | 0;
     var iphone = Math.floor(downloads / random(1, 6)) | 0;
     var android = downloads - iphone;
     var male = Math.floor(downloads / random(1, 6)) | 0;
     var female = downloads - male;
-
-
-
     var result = {
       "downloads": downloads,
       "os": {
@@ -245,15 +240,80 @@ module.exports = function (app, passport) {
   });
 
 
+  /* ------------------------------------------------
+       Books
+     -------------------------------------------------
+  */
 
+
+
+  app.get('/api/book', function (req, res) {
+    Book.find(req.query, function (err, collections) {
+      if (err) return next(err);
+      res.json(collections);
+    });
+  });
+
+  app.param('idBook', function (req, res, next, id) {
+    Book.findOne({ '_id': id }, function (err, item) {
+      if (err) { return next(err); }
+      if (!item) { return res.json({ error: "No se encontro la notificacion." }); }
+      req.item = item;
+      return next();
+    })
+  });
+
+  app.get('/api/book/:id', function (req, res) {
+    if (err) {
+      return res.json({ status: "error", message: err.message });
+    }
+    return res.jsonp(req.item);
+  });
+
+  app.post('/api/book', function (req, res, next) {
+    try {
+      console.log("send -> response -> ", req.body);
+      var item = new Book(req.body);
+      item.save(function (err, post) {
+        if (err) {
+          return res.json({ status: "error", message: err.message });
+        }
+        res.json(post);
+      });
+
+    }
+    catch (err) {
+      console.log("err", err);
+    }
+  });
+
+  app.put('/api/book/:id', function (req, res) {
+    Book.findById({ _id: req.params.id }, (err, book) => {
+      if (err) {
+        return res.json({ status: "error", message: err.message });
+      }
+      Object.assign(book, req.body).save((err, book) => {
+        if (err) res.send(err);
+        res.json({ status: "ok", message: 'Book updated!', data: book });
+      });
+    });
+  });
+
+  app.delete('/api/book/:id', function (req, res) {
+    Book.remove({ _id: req.params.id }, (err, result) => {
+      if (err) {
+        return res.json({ error: err.message });
+      }
+      res.json({ status: "ok", message: "Book successfully deleted!", result });
+    });
+  });
 
 
 };
 
-function isLoggedIn(req, res, next) {
+function isLoggedIn (req, res, next) {
   if (req.isAuthenticated())
     return next();
 
   res.json({ mesage: "No logueado." });
 }
-
