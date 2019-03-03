@@ -11,8 +11,8 @@ var env = process.env.NODE_ENV || 'development',
 var db = mongoose.connect(config.db, { useNewUrlParser: true })
 require('./config/passport')(passport, config)
 
-require('./app/models/book.js')
-require('./app/models/notificaciones.js')
+require('./app/models/books.js')
+require('./app/models/notifications.js')
 
 require('./config/passport')(passport, config)
 

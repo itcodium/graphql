@@ -9,7 +9,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 }]);
 
 app.factory('Notificaciones', ['$resource', function ($resource) {
-	return $resource('/api/notificaciones/:id', null, {
+	return $resource('/api/notifications/:idNotifications', null, {
 		'update': { method: 'PUT' }
 	});
 }]);
@@ -89,36 +89,4 @@ app.controller('NotificacionesController',
 				});
 
 			}
-
-			/*
-			
-			
-			
-							*/
-			/*
-		$scope.update = function(index){
-			var todo = $scope.todos[index];
-			Todos.update({id: todo._id}, todo, function(){
-								$scope.editing[index] = false;
-						});
-		}
-	
-		$scope.edit = function(index){
-			$scope.editing[index] = angular.copy($scope.todos[index]);
-		}
-	
-		$scope.cancel = function(index){
-			$scope.todos[index] = angular.copy($scope.editing[index]);
-			$scope.editing[index] = false;
-		}
-	
-				$scope.remove = function(index){
-			var todo = $scope.todos[index];
-								Todos.remove({id: todo._id}, function(){
-												 $scope.todos.splice(index, 1);
-								 });
-						}
-	*/
-
-
 		}]);

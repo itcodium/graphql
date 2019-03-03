@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-var NotificaionesSchema = new mongoose.Schema({
+var NotificationSchema = new mongoose.Schema({
     title: String,
     description: String,
     link: String,
@@ -14,4 +14,4 @@ var NotificaionesSchema = new mongoose.Schema({
     read: Boolean
 });
 
-module.exports = mongoose.model('Notificaciones', NotificaionesSchema, 'notificaciones');
+module.exports = mongoose.model('Notification', NotificationSchema, 'Notification');

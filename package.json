@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
-    "test": "mocha",
+    "test": "mocha app/test",
     "test:browser": "live-server --port=9000 --mount=/:public/test"
   },
   "dependencies": {

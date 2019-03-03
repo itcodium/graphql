@@ -6,15 +6,15 @@ module.exports = {
         db: 'mongodb://admin:mlab123!@ds133597.mlab.com:33597/survey0001',
         root: rootPath,
         app: {
-            name: 'Clover - Development Environment',
+            name: 'Development Environment',
             port: 7777
         }
     },
     test: {
-        db: 'mongodb://admin:mlab123!@ds133597.mlab.com:33597/survey0001',
+        db: 'mongodb://test:123123Test@ds159025.mlab.com:59025/survey_test',
         root: rootPath,
         app: {
-            name: 'Clover - Test Environment',
+            name: 'Test Environment',
             port: 8888
         }
     },
@@ -22,7 +22,7 @@ module.exports = {
         db: 'mongodb://admin:mlab123!@ds133597.mlab.com:33597/survey0001',
         root: rootPath,
         app: {
-            name: 'Clover',
+            name: 'Production',
             port: 8080
         }
     },
