@@ -25,4 +25,5 @@ BookSchema.pre('save', next => {
 });
 
 //Exports the BookSchema for use elsewhere.
-module.exports = mongoose.model('book', BookSchema);
+
+module.exports = mongoose.model('Book', BookSchema, 'book');
