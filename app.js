@@ -24,9 +24,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+require('./config/GraphQL/graphql')(app, bodyParser)
 require('./config/express')(app, config, passport)
 require('./config/routes')(app, passport)
-require('./config/graphql')(app)
+
 
 
 
