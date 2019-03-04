@@ -1,3 +1,3 @@
 git add .
-git commit -m "Se completa el test de book."
+git commit -m "Se agrega api/graphql."
 git push
