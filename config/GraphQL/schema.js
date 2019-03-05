@@ -1,7 +1,4 @@
 
-var resolvers = require('./resolvers');
-var { makeExecutableSchema } = require('graphql-tools');
-
 var typeDefs = `type Notification {
                     _id: ID!
                     title: String!
@@ -27,9 +24,5 @@ var typeDefs = `type Notification {
                     deleteNotification(_id: ID!) : Notification
                   }
               `;
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers
-});
 
-module.exports = schema;
+module.exports = typeDefs;

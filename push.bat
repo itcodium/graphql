@@ -1,3 +1,3 @@
 git add .
-git commit -m "Crud graphql."
+git commit -m "Graphql apollo-server"
 git push

@@ -1,14 +1,15 @@
 
+const { ApolloServer, gql } = require('apollo-server-express');
 
-var graphqlHTTP = require('express-graphql');
-var schema = require('./schema');
+var typeDefs = require('./schema');
+var resolvers = require('./resolvers');
+
 module.exports = function (app, bodyParser) {
-
-  app.use('/api/graphql', graphqlHTTP({
-    schema: schema,
-    graphiql: true,
-  }));
-
+  const server = new ApolloServer({ typeDefs, resolvers });
+  server.applyMiddleware({ app });
+  app.listen({ port: 4000 }, () =>
+    console.log(`🚀 Server ready at http://localhost:4000${ server.graphqlPath }`)
+  );
 
 }
 
