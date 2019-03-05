@@ -30,7 +30,7 @@ module.exports = {
         async deleteNotification (root, {
             _id
         }) {
-            return await Notifications.findOneAndRemove({
+            return await Notifications.findOneAndDelete({
                 _id
             });
         }

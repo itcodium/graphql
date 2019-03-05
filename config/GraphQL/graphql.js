@@ -37,8 +37,8 @@ module.exports = function (app, bodyParser) {
     mutation{
         updateNotification ( _id:"5c7beb82267aca0d7c72a633",
           input:{
-              title: "ADM-4250 (UPDATED)  Errores de datos - Filtro de pago y Buscador",
-              description: "test (UPDATED)"
+              title: "ADM-4250 (UPDATED II)  Errores de datos - Filtro de pago y Buscador",
+              description: "test (UPDATED II)"
           })
         {
           _id
