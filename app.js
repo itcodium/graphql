@@ -2,6 +2,7 @@ var express = require('express');
 var passport = require('passport');
 var path = require('path');
 var bodyParser = require('body-parser');
+var  http = require('http');
 
 // var env = process.env.NODE_ENV || 'development',
 var env = process.env.NODE_ENV || 'development',
@@ -29,7 +30,27 @@ require('./config/GraphQL/graphql')(app, bodyParser)
 require('./config/express')(app, config, passport)
 require('./config/routes')(app, passport)
 
+ 
 
+
+var request = require('request');
+var headers = {
+    'Authorization':      "Bearer "+"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTM4OTE2NjQsImV4cCI6MTU1Mzg5MjI2NCwiZGF0YSI6eyJpZCI6IjgxIn19.W67DIaSCT602_7rNZzz0EI_YXipsNglrrqLvKge2BmM",
+    'Content-Type':    "application/json;charset=utf-8"
+}
+// Configure the request
+var options = {
+    url: 'http://dev.adm.dlatv.net/services/products/filters/1308/contents?tenant_code=clarovideo',
+    method: 'GET',
+    headers: headers,
+    qs: {'key1': 'xxx', 'key2': 'yyy'}
+}
+// Start the request
+request(options, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+        console.log(body)
+    }
+})
 
 
 app.use(function (req, res, next) {
