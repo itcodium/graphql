@@ -3,15 +3,39 @@ var mongoose = require('mongoose');
 var async = require('async')
     , Books = mongoose.model('Book')
 
-
-
 exports.getAll = function (req, res) {
-    Books.find(req.query, function (err, items) {
-        if (err) {
-            return res.send({ status: "error", errors: err.message });
+    var order={};
+    var index=req.query.order[0].column;
+    var name=req.query.columns[index].data;
+    
+    if(name){
+        try {
+            order=JSON.parse("{\""+name +"\":\""+ req.query.order[0].dir+"\"}");
         }
-        res.json(items);
-    });
+        catch(err) {
+            res.status(500).jsonp({"message":err.message});
+        }
+    }
+    var perPage=parseInt(req.query.length);
+    var page=parseInt(req.query.start);
+    Books.find({})
+           .sort(order)
+            .skip(page)
+            .limit(perPage)
+            .exec(function(err, data) {
+                Books.countDocuments().exec(function(err, count) {
+                    if (err){
+                        res.status(500).jsonp({"message":err.message});
+                    }
+                    res.jsonp(
+                        {   result: data,
+                            current: page,
+                            recordsTotal: count,
+                            recordsFiltered: count
+                        }
+                    );
+                })
+            })
 }
 
 exports.item = function (req, res, next, id) {

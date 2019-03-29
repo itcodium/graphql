@@ -3,6 +3,7 @@ var passport = require('passport');
 var path = require('path');
 var bodyParser = require('body-parser');
 
+// var env = process.env.NODE_ENV || 'development',
 var env = process.env.NODE_ENV || 'development',
   config = require('./config/config')[env],
   mongoose = require('mongoose')

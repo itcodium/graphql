@@ -11,7 +11,7 @@ module.exports = {
         }
     },
     test: {
-        db: 'mongodb://test:123123Test@ds159025.mlab.com:59025/survey_test',
+        db: 'mongodb://test:123123Test@ds159025.mlab.com:59025/survey0001',
         root: rootPath,
         app: {
             name: 'Test Environment',
