@@ -10,10 +10,10 @@ module.exports = function (app, passport) {
     });
     app.get('/appversion', function (req, res, next) {
         res.render('appversion', { title: 'Versiones.' });
-    });
-    app.get('/', function (req, res, next) {
-        res.render('index', { title: 'Notificaciones' });
     });*/
+    app.get('/', function (req, res, next) {
+        res.render('home', { title: 'Notificaciones' });
+    });
 
     var cBook = require('../app/controllers/books')
 

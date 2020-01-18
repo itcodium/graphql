@@ -25,9 +25,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 console.log("DIR: ", __dirname + '/static')
 console.log("DIR 2: ", path.join(__dirname, '/static'))
 
-app.use(express.static(path.join(__dirname, 'public')))
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'ejs')
+//app.use(express.static(path.join(__dirname, 'public')))
+//app.set('views', path.join(__dirname, 'views'))
+//app.set('view engine', 'ejs')
 
 require('./config/GraphQL/graphql')(app, bodyParser)
 require('./config/express')(app, config, passport)

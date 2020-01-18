@@ -76,13 +76,13 @@ module.exports = function (app, config, passport) {
     // fin inicializar server
 
     app.set('showStackError', true)
-    /*
-        app.use(compress({
-            filter: function (req, res) {
-                return /json|text|javascript|css/.test(res.getHeader('Content-Type'));
-            },
-            level: 9
-        })) */
+
+    app.use(compress({
+        filter: function (req, res) {
+            return /json|text|javascript|css/.test(res.getHeader('Content-Type'));
+        },
+        level: 9
+    }))
 
     // app.use(favicon(__dirname + '/public/favicon.ico'));
 
@@ -90,17 +90,18 @@ module.exports = function (app, config, passport) {
     //console.log("__dirname", __dirname + "/..")
     // app.use(express.static(path.join(__dirname + "/../", 'public')));
 
-    /*app.get('/', function (req, res) {
+    app.get('/', function (req, res) {
         res.sendFile(path.join(__dirname, 'public', 'index.html'));
-    });*/
+    });
 
 
     //app.use(express.static(config.root + '/public'))
     //app.use(express.static(path.join(__dirname, 'public')));
     //app.use('/public', express.static(path.join(__dirname, 'public')));
     // view engine setup
-    //app.set('views', path.join(config.root, 'views'));
-    //app.set('view engine', 'ejs');
+
+    app.set('views', path.join(config.root, 'views'));
+    app.set('view engine', 'ejs');
 
     app.enable("jsonp callback")
 
