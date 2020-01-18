@@ -23,14 +23,17 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 console.log("DIR: ", __dirname + '/public')
-app.use(express.static(__dirname + '/public'));
+// app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname, '/public')));
 
 require('./config/GraphQL/graphql')(app, bodyParser)
 require('./config/express')(app, config, passport)
 require('./config/routes')(app, passport)
 
 
-
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/public/index.html'));
+});
 
 app.use(function (req, res, next) {
   var err = new Error('Not Found ' + req.originalUrl);
