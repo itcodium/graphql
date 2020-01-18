@@ -20,10 +20,11 @@ module.exports = function (app, config, passport) {
 
     var server = http.createServer(app);
 
-    console.log("Port", port);
+    console.log("Listen Port: ", port);
     server.listen(port);
     server.on('error', onError);
     server.on('listening', onListening);
+
     function normalizePort (val) {
         var port = parseInt(val, 10);
 
