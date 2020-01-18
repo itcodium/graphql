@@ -31,10 +31,6 @@ require('./config/express')(app, config, passport)
 require('./config/routes')(app, passport)
 
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/static/index.html'));
-});
-
 
 app.use(function (req, res, next) {
   var err = new Error('Not Found ' + req.originalUrl);
