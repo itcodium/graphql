@@ -8,7 +8,9 @@ var env = process.env.NODE_ENV || 'development',
   mongoose = require('mongoose')
 
 
-var db = mongoose.connect(config.db, { useNewUrlParser: true })
+var db = mongoose.connect(config.db, { useNewUrlParser: true, useUnifiedTopology: true  }
+
+  )
 require('./config/passport')(passport, config)
 
 require('./app/models/books.js')
