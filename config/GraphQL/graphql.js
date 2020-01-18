@@ -7,8 +7,10 @@ var resolvers = require('./resolvers');
 module.exports = function (app, bodyParser) {
   const server = new ApolloServer({ typeDefs, resolvers });
   server.applyMiddleware({ app });
-  app.listen({ port: 4000 }, () =>
-    console.log(`🚀 Server ready at http://localhost:4000${ server.graphqlPath }`)
+  var port = process.env.PORT || 4000;
+  console.log("process.env.PORT", process.env.PORT)
+  app.listen({ port: port }, () =>
+    console.log(`🚀 Server ready at http://localhost:${ port }${ server.graphqlPath }`)
   );
 
 }
