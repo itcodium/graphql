@@ -1,9 +1,9 @@
 {
-  "name": "Notificaciones",
+  "name": "notificaciones",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "node app.js",
     "test": "mocha app/test",
     "test:browser": "live-server --port=9000 --mount=/:public/test"
   },
