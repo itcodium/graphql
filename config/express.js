@@ -100,8 +100,9 @@ module.exports = function (app, config, passport) {
     //app.use('/public', express.static(path.join(__dirname, 'public')));
     // view engine setup
 
-    app.set('views', path.join(config.root, 'views'));
-    app.set('view engine', 'ejs');
+
+
+    /*
     app.use(express.static(path.join(config.root, 'public')));
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(express.static(path.join(__dirname, '/public')));
@@ -110,6 +111,7 @@ module.exports = function (app, config, passport) {
     console.log("_1_dirname", path.join(__dirname, 'public'))
     console.log("_2_dirname", path.join(__dirname, '/public'))
     console.log("_3_dirname", path.join(__dirname, '../public'))
+    */
 
     app.enable("jsonp callback")
 

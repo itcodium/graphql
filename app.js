@@ -8,9 +8,9 @@ var env = process.env.NODE_ENV || 'development',
   mongoose = require('mongoose')
 
 
-var db = mongoose.connect(config.db, { useNewUrlParser: true, useUnifiedTopology: true  }
+var db = mongoose.connect(config.db, { useNewUrlParser: true, useUnifiedTopology: true }
 
-  )
+)
 require('./config/passport')(passport, config)
 
 require('./app/models/books.js')
@@ -33,6 +33,11 @@ console.log("DIR 2: ", path.join(__dirname, '/static'))
 
 require('./config/GraphQL/graphql')(app, bodyParser)
 require('./config/express')(app, config, passport)
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+app.use(express.static(path.join(__dirname, 'public')));
+
 require('./config/routes')(app, passport)
 
 
