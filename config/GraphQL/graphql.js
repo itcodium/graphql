@@ -5,7 +5,11 @@ var typeDefs = require('./schema');
 var resolvers = require('./resolvers');
 
 module.exports = function (app, bodyParser) {
-  const server = new ApolloServer({ typeDefs, resolvers });
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    introspection: true
+  });
   server.applyMiddleware({ app });
   var port = process.env.PORT || 4000;
 
