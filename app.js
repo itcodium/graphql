@@ -22,11 +22,9 @@ var app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-console.log("_1_dirname", __dirname + '/public');
-console.log("_2_dirname", path.join(__dirname, 'public'));
+console.log("__dirname", path.join(__dirname, 'public'));
 
-console.log("process.env", process.env);
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/static', express.static(path.join(__dirname, 'public')));
 
 require('./config/GraphQL/graphql')(app, bodyParser)
 require('./config/express')(app, config, passport)
