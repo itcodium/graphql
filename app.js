@@ -26,7 +26,7 @@ console.log("_1_dirname", __dirname + '/public');
 
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/public', express.static(path.join(__dirname, 'public')));
+
 
 require('./config/GraphQL/graphql')(app, bodyParser)
 require('./config/express')(app, config, passport)
