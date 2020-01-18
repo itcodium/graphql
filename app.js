@@ -22,9 +22,9 @@ var app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-console.log("DIR: ", __dirname + '/public')
-console.log("DIR 2: ", path.join(__dirname, '/public'))
-app.use(express.static(path.join(__dirname, '/public')));
+console.log("DIR: ", __dirname + '/static')
+console.log("DIR 2: ", path.join(__dirname, '/static'))
+app.use(express.static(path.join(__dirname, '/static')));
 
 require('./config/GraphQL/graphql')(app, bodyParser)
 require('./config/express')(app, config, passport)
@@ -32,7 +32,7 @@ require('./config/routes')(app, passport)
 
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/public/index.html'));
+  res.sendFile(path.join(__dirname + '/static/index.html'));
 });
 
 
