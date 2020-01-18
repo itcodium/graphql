@@ -22,6 +22,8 @@ var app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+console.log("DIR: ", __dirname + '/public')
+app.use(express.static(__dirname + '/public'));
 
 require('./config/GraphQL/graphql')(app, bodyParser)
 require('./config/express')(app, config, passport)

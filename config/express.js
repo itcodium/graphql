@@ -86,8 +86,8 @@ module.exports = function (app, config, passport) {
     // app.use(favicon(__dirname + '/public/favicon.ico'));
 
     //app.use(express.static('public'));
-    console.log("__dirname", __dirname + "/..")
-    app.use(express.static(path.join(__dirname + "/../", 'public')));
+    //console.log("__dirname", __dirname + "/..")
+    // app.use(express.static(path.join(__dirname + "/../", 'public')));
 
     /*app.get('/', function (req, res) {
         res.sendFile(path.join(__dirname, 'public', 'index.html'));
