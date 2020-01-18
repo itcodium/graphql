@@ -4,6 +4,7 @@ var async = require('async')
 
 
 module.exports = function (app, passport) {
+    /*
     app.get('/notificaciones', function (req, res, next) {
         res.render('notificaciones', { title: 'Notificaciones.' });
     });
@@ -12,7 +13,7 @@ module.exports = function (app, passport) {
     });
     app.get('/', function (req, res, next) {
         res.render('index', { title: 'Notificaciones' });
-    });
+    });*/
 
     var cBook = require('../app/controllers/books')
 
