@@ -11,7 +11,6 @@ module.exports = function (app, bodyParser) {
 
   app.listen({ port: port }, () => {
     console.log(`1(🚀) Server ready at http://localhost:${ port }${ server.graphqlPath }`);
-    console.log(`2(🚀) Server ready at ${ url }`);
   });
 
 }
