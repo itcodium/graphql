@@ -76,12 +76,13 @@ module.exports = function (app, config, passport) {
     // fin inicializar server
 
     app.set('showStackError', true)
-    app.use(compress({
-        filter: function (req, res) {
-            return /json|text|javascript|css/.test(res.getHeader('Content-Type'));
-        },
-        level: 9
-    }))
+    /*
+        app.use(compress({
+            filter: function (req, res) {
+                return /json|text|javascript|css/.test(res.getHeader('Content-Type'));
+            },
+            level: 9
+        })) */
 
     // app.use(favicon(__dirname + '/public/favicon.ico'));
 
