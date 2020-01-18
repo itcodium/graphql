@@ -1,5 +1,5 @@
 
-var mongoose = require('mongoose');
+ 
 var async = require('async')
     , Books = mongoose.model('Book')
 
