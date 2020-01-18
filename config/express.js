@@ -87,7 +87,7 @@ module.exports = function (app, config, passport) {
     // app.use(favicon(__dirname + '/public/favicon.ico'));
 
     //app.use(express.static('public'));
-    //console.log("__dirname", __dirname + "/..")
+    console.log("__dirname")
     // app.use(express.static(path.join(__dirname + "/../", 'public')));
 
     /*app.get('/', function (req, res) {
@@ -103,7 +103,13 @@ module.exports = function (app, config, passport) {
     app.set('views', path.join(config.root, 'views'));
     app.set('view engine', 'ejs');
     app.use(express.static(path.join(config.root, 'public')));
+    app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.static(path.join(__dirname, '/public')));
+    app.use(express.static(path.join(__dirname, '../public')));
 
+    console.log("_1_dirname", path.join(__dirname, 'public'))
+    console.log("_2_dirname", path.join(__dirname, '/public'))
+    console.log("_3_dirname", path.join(__dirname, '../public'))
 
     app.enable("jsonp callback")
 
