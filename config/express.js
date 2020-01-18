@@ -90,9 +90,9 @@ module.exports = function (app, config, passport) {
     //console.log("__dirname", __dirname + "/..")
     // app.use(express.static(path.join(__dirname + "/../", 'public')));
 
-    app.get('/', function (req, res) {
+    /*app.get('/', function (req, res) {
         res.sendFile(path.join(__dirname, 'public', 'index.html'));
-    });
+    });*/
 
 
     //app.use(express.static(config.root + '/public'))
@@ -102,6 +102,8 @@ module.exports = function (app, config, passport) {
 
     app.set('views', path.join(config.root, 'views'));
     app.set('view engine', 'ejs');
+    app.use(express.static(path.join(config.root, 'public')));
+
 
     app.enable("jsonp callback")
 
