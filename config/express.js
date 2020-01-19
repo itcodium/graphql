@@ -13,16 +13,14 @@ var bodyParser = require('body-parser');
 
 module.exports = function (app, express, config, passport) {
 
-    var port = normalizePort(process.env.PORT || '5000');
+    var port = normalizePort(process.env.PORT || '4000');
     app.set('port', port);
 
-
     var server = http.createServer(app);
-
-    console.log("Listen Port: ", port);
     server.listen(port);
     server.on('error', onError);
     server.on('listening', onListening);
+
 
     function normalizePort (val) {
         var port = parseInt(val, 10);
@@ -66,7 +64,7 @@ module.exports = function (app, express, config, passport) {
     }
 
     // fin inicializar server
-    // app.set('showStackError', true)
+    app.set('showStackError', true)
 
     app.use(compress({
         filter: function (req, res) {
@@ -76,24 +74,6 @@ module.exports = function (app, express, config, passport) {
     }))
 
     // app.use(favicon(__dirname + '/public/favicon.ico'));
-
-    //app.use(express.static('public'));
-    console.log("__dirname")
-    // app.use(express.static(path.join(__dirname + "/../", 'public')));
-
-    /*app.get('/', function (req, res) {
-        res.sendFile(path.join(__dirname, 'public', 'index.html'));
-    });*/
-
-
-    //app.use(express.static(config.root + '/public'))
-    //app.use(express.static(path.join(__dirname, 'public')));
-    //app.use('/public', express.static(path.join(__dirname, 'public')));
-    // view engine setup
-
-
-
-
 
     app.set('views', path.join(config.root, 'views'));
     app.set('view engine', 'ejs');
@@ -118,27 +98,13 @@ module.exports = function (app, express, config, passport) {
     app.use(flash())
 
     /* Static Files */
-
-    //app.use(express.static(path.join(__dirname, 'public')));
-    //app.use(express.static(path.join(__dirname, '/public')));
-    //app.use(express.static(path.join(__dirname, '../public')));
     app.use(express.static(path.join(config.root, 'public')));
-
-    //console.log("_1_dirname", path.join(__dirname, 'public'))
-    //console.log("_2_dirname", path.join(__dirname, '/public'))
-    //console.log("_3_dirname", path.join(__dirname, '../public'))
-    console.log("[ ++++ config.root +++]", config.root)
-
-    /* Static Files */
-
     app.enable("jsonp callback")
-
-
     app.use(helpers(config.app.name))
-    // app.use(methodOverride())
+    app.use(methodOverride())
 
     // Session init -------------------------------------------
-    console.log("-- config.db --", config.db)
+
     var MongoDBStore = require('connect-mongodb-session')(session);
     var store = new MongoDBStore(
         {
@@ -153,11 +119,8 @@ module.exports = function (app, express, config, passport) {
 
     // Session End -------------------------------------------
 
-
     app.use(logger('dev'));
 
-    // development error handler
-    // will print stacktrace
     if (app.get('env') === 'development') {
         app.use(function (err, req, res, next) {
             res.status(err.status || 500);
@@ -168,8 +131,6 @@ module.exports = function (app, express, config, passport) {
         });
     }
 
-    // production error handler
-    // no stacktraces leaked to user
     app.use(function (err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {
@@ -178,8 +139,7 @@ module.exports = function (app, express, config, passport) {
         });
     });
 
-
-
-
-
+    console.log("1. Listen Port: ", port);
+    console.log("2. APP_ROOT", config.root)
+    console.log("3. config.db", config.db)
 }
