@@ -26,17 +26,12 @@ module.exports = function (app, express, config, passport) {
 
     function normalizePort (val) {
         var port = parseInt(val, 10);
-
         if (isNaN(port)) {
-            // named pipe
             return val;
         }
-
         if (port >= 0) {
-            // port number
             return port;
         }
-
         return false;
     }
 
@@ -49,7 +44,6 @@ module.exports = function (app, express, config, passport) {
             ? 'Pipe ' + port
             : 'Port ' + port;
 
-        // handle specific listen errors with friendly messages
         switch (error.code) {
             case 'EACCES':
                 console.error(bind + ' requires elevated privileges');
@@ -69,13 +63,10 @@ module.exports = function (app, express, config, passport) {
         var bind = typeof addr === 'string'
             ? 'pipe ' + addr
             : 'port ' + addr.port;
-        //debug('Listening on ' + bind);
     }
 
     // fin inicializar server
-
-
-    app.set('showStackError', true)
+    // app.set('showStackError', true)
 
     app.use(compress({
         filter: function (req, res) {
@@ -102,16 +93,7 @@ module.exports = function (app, express, config, passport) {
 
 
 
-    /*
-    app.use(express.static(path.join(config.root, 'public')));
-    app.use(express.static(path.join(__dirname, 'public')));
-    app.use(express.static(path.join(__dirname, '/public')));
-    app.use(express.static(path.join(__dirname, '../public')));
 
-    console.log("_1_dirname", path.join(__dirname, 'public'))
-    console.log("_2_dirname", path.join(__dirname, '/public'))
-    console.log("_3_dirname", path.join(__dirname, '../public'))
-    */
 
     app.set('views', path.join(config.root, 'views'));
     app.set('view engine', 'ejs');
@@ -134,7 +116,20 @@ module.exports = function (app, express, config, passport) {
     app.use(passport.initialize())
     app.use(passport.session())
     app.use(flash())
+
+    /* Static Files */
+
+    app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.static(path.join(__dirname, '/public')));
+    app.use(express.static(path.join(__dirname, '../public')));
     app.use(express.static(path.join(config.root, 'public')));
+
+    console.log("_1_dirname", path.join(__dirname, 'public'))
+    console.log("_2_dirname", path.join(__dirname, '/public'))
+    console.log("_3_dirname", path.join(__dirname, '../public'))
+    console.log("config.root", config.root)
+
+    /* Static Files */
 
     app.enable("jsonp callback")
 
