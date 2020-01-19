@@ -1,5 +1,5 @@
 
-var typeDefs = `type Notification {
+var typeDefs = `type Message {
                     _id: ID!
                     title: String!
                     description: String!
@@ -10,18 +10,20 @@ var typeDefs = `type Notification {
                     read: Boolean
                   }
                   type Query {
-                    getNotification(_id: ID!): Notification
-                    allNotifications: [Notification]
+                    getMessage(_id: ID!): Message
+                    allMessage: [Message]
                   }
-
-                  input NotificationInput {
+                  input MessageInput {
                     title: String!
                     description: String!
                   }
                   type Mutation {
-                    updateNotification(_id: ID!, input: NotificationInput): Notification
-                    createNotification(input: NotificationInput) : Notification
-                    deleteNotification(_id: ID!) : Notification
+                    updateMessage(_id: ID!, input: MessageInput): Message
+                    createMessage(input: MessageInput) : Message
+                    deleteMessage(_id: ID!) : Message
+                  }
+                  type Subscription {
+                    newMessage: Message
                   }
               `;
 

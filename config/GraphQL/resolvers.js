@@ -1,38 +1,51 @@
 
-var Notifications = require('../../app/models/notifications');
+var Message = require('../../app/models/message');
+const { PubSub } = require('graphql-subscriptions');
+const pubsub = new PubSub();
+const NOTIFICATION_SUBSCRIPTION_TOPIC = 'newMessage';
+
+
 module.exports = {
     Query: {
-        async getNotification (root, {
+        async getMessage (root, {
             _id
         }) {
-            return await Notifications.findById(_id);
+            return await Message.findById(_id);
         },
-        async allNotifications () {
-            return await Notifications.find();
+        async allMessage () {
+            return await Message.find();
         }
     },
     Mutation: {
-        async createNotification (root, {
+        async createMessage (root, {
             input
         }) {
-            return await Notifications.create(input);
+            var message = await Message.create(input);
+            pubsub.publish(NOTIFICATION_SUBSCRIPTION_TOPIC, { message });
+            return message;
+
         },
-        async updateNotification (root, {
+        async updateMessage (root, {
             _id,
             input
         }) {
-            return await Notifications.findOneAndUpdate({
+            return await Message.findOneAndUpdate({
                 _id
             }, input, {
                     new: true
                 })
         },
-        async deleteNotification (root, {
+        async deleteMessage (root, {
             _id
         }) {
-            return await Notifications.findOneAndDelete({
+            return await Message.findOneAndDelete({
                 _id
             });
         }
-    }
+    },
+    Subscription: {
+        newMessage: {
+            subscribe: () => pubsub.asyncIterator(NOTIFICATION_SUBSCRIPTION_TOPIC)
+        }
+    },
 };

@@ -24,12 +24,11 @@ module.exports = function (app, passport) {
     app.put('/api/book/:id', cBook.update);
     app.delete('/api/book/:id', cBook.delete);
 
-    var cNotifications = require('../app/controllers/notifications')
-
-    app.get('/api/notifications', cNotifications.getAll);
-    app.get('/api/notifications/:idNotifications', cNotifications.getById);
-    app.param('idNotifications', cNotifications.item);
-    app.post('/api/notifications', cNotifications.create);
-    app.put('/api/notifications/:id', cNotifications.update);
-    app.delete('/api/notifications/:id', cNotifications.delete);
+    var cMessage = require('../app/controllers/message')
+    app.get('/api/message', cMessage.getAll);
+    app.get('/api/message/:idMessage', cMessage.getById);
+    app.param('idMessage', cMessage.item);
+    app.post('/api/message', cMessage.create);
+    app.put('/api/message/:id', cMessage.update);
+    app.delete('/api/message/:id', cMessage.delete);
 }

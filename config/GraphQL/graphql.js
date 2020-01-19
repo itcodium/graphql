@@ -1,8 +1,11 @@
 
-const { ApolloServer, gql } = require('apollo-server-express');
+const { ApolloServer, graphiqlExpress } = require('apollo-server-express');
+const { SubscriptionServer } = require('subscriptions-transport-ws');
 
 var typeDefs = require('./schema');
 var resolvers = require('./resolvers');
+
+
 
 module.exports = function (app, bodyParser) {
   const server = new ApolloServer({
@@ -12,11 +15,23 @@ module.exports = function (app, bodyParser) {
     playground: true,
   });
   server.applyMiddleware({ app });
-  //var port = process.env.PORT || 4000;
+  app.use('/graphiql', graphiqlExpress({
+    endpointURL: '/graphql',
+    subscriptionsEndpoint: `ws://localhost:4000/subscriptions`
+  }));
 
-  /*
-  app.listen({ port: port }, () => {
-    console.log(`1(🚀) Server ready at http://localhost:${ port }${ server.graphqlPath }`);
-  });*/
+  const ws = createServer(app);
+  ws.listen(4000, () => {
+    console.log('Go to http://localhost:4000/graphiql to run queries!');
+
+    new SubscriptionServer({
+      execute,
+      subscribe,
+      schema
+    }, {
+        server: ws,
+        path: '/subscriptions',
+      });
+  });
 
 }
