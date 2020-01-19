@@ -119,15 +119,15 @@ module.exports = function (app, express, config, passport) {
 
     /* Static Files */
 
-    app.use(express.static(path.join(__dirname, 'public')));
-    app.use(express.static(path.join(__dirname, '/public')));
-    app.use(express.static(path.join(__dirname, '../public')));
+    //app.use(express.static(path.join(__dirname, 'public')));
+    //app.use(express.static(path.join(__dirname, '/public')));
+    //app.use(express.static(path.join(__dirname, '../public')));
     app.use(express.static(path.join(config.root, 'public')));
 
-    console.log("_1_dirname", path.join(__dirname, 'public'))
-    console.log("_2_dirname", path.join(__dirname, '/public'))
-    console.log("_3_dirname", path.join(__dirname, '../public'))
-    console.log("config.root", config.root)
+    //console.log("_1_dirname", path.join(__dirname, 'public'))
+    //console.log("_2_dirname", path.join(__dirname, '/public'))
+    //console.log("_3_dirname", path.join(__dirname, '../public'))
+    console.log("[ ++++ config.root +++]", config.root)
 
     /* Static Files */
 
@@ -139,7 +139,6 @@ module.exports = function (app, express, config, passport) {
 
     // Session init -------------------------------------------
     console.log("-- config.db --", config.db)
-
     var MongoDBStore = require('connect-mongodb-session')(session);
     var store = new MongoDBStore(
         {
@@ -147,16 +146,12 @@ module.exports = function (app, express, config, passport) {
             collection: 'app_sessions'
         });
 
-    // Catch errors
     store.on('error', function (error) {
         assert.ifError(error);
         assert.ok(false);
     });
 
     // Session End -------------------------------------------
-
-
-
 
 
     app.use(logger('dev'));

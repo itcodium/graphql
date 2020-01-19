@@ -8,9 +8,6 @@ var env = process.env.NODE_ENV || 'development',
   mongoose = require('mongoose')
 
 
-
-
-
 var db = mongoose.connect(config.db, { useNewUrlParser: true, useUnifiedTopology: true })
 
 require('./app/models/books.js')
@@ -20,26 +17,9 @@ require('./config/passport')(passport, config)
 
 var app = express();
 
-// (* descoment...) app.use(bodyParser.json());
-// (* descoment...) app.use(bodyParser.urlencoded({ extended: false }));
-
-//console.log("DIR: ", __dirname + '/static')
-//console.log("DIR 2: ", path.join(__dirname, '/static'))
-
-//app.use(express.static(path.join(__dirname, 'public')))
-//app.set('views', path.join(__dirname, 'views'))
-//app.set('view engine', 'ejs')
-
 require('./config/GraphQL/graphql')(app, bodyParser)
 require('./config/express')(app, express, config, passport)
-
-//app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', 'ejs');
-//app.use(express.static(path.join(__dirname, 'public')));
-
 require('./config/routes')(app, passport)
-
-
 
 app.use(function (req, res, next) {
   var err = new Error('Not Found ' + req.originalUrl);
@@ -47,30 +27,5 @@ app.use(function (req, res, next) {
   next(err);
 });
 
-
-/*
-// development error handler
-// will print stacktrace
-
-if (app.get('env') === 'development') {
-  app.use(function (err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function (err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
-});
-*/
 
 exports = module.exports = app;
