@@ -45,7 +45,7 @@
 #4 Delete
 
  mutation{
-        deleteMessage (_id:"5e23a8aa0a436314c4c6555b")
+        deleteMessage (_id:"5e23aef661c1db0bf80bf752")
         {
           _id
           title
@@ -71,4 +71,5 @@ mutation {
 }
 
 
-# npm install --save graphql-subscriptions http subscriptions-transport-ws cors
+#### npm install --save graphql-subscriptions http subscriptions-transport-ws cors
+#### npm install --save apollo-link-ws

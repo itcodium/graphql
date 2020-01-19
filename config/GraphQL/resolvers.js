@@ -21,7 +21,7 @@ module.exports = {
             input
         }) {
             var message = await Message.create(input);
-            pubsub.publish(NOTIFICATION_SUBSCRIPTION_TOPIC, { message });
+            pubsub.publish(NOTIFICATION_SUBSCRIPTION_TOPIC, { createdMessage: message });
             return message;
 
         },
@@ -44,7 +44,7 @@ module.exports = {
         }
     },
     Subscription: {
-        newMessage: {
+        createdMessage: {
             subscribe: () => pubsub.asyncIterator(NOTIFICATION_SUBSCRIPTION_TOPIC)
         }
     },

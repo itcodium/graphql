@@ -1,4 +1,5 @@
 
+
 var typeDefs = `type Message {
                     _id: ID!
                     title: String!
@@ -23,7 +24,7 @@ var typeDefs = `type Message {
                     deleteMessage(_id: ID!) : Message
                   }
                   type Subscription {
-                    newMessage: Message
+                    createdMessage: Message
                   }
               `;
 

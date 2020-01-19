@@ -8,6 +8,7 @@
     "test:browser": "live-server --port=9000 --mount=/:public/test"
   },
   "dependencies": {
+    "apollo-link-ws": "^1.0.19",
     "apollo-server-express": "^2.9.16",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",

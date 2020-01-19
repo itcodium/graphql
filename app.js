@@ -17,7 +17,7 @@ require('./config/passport')(passport, config)
 
 var app = express();
 
-require('./config/GraphQL/graphql')(app, bodyParser)
+require('./config/GraphQL/graphql')(app, express, bodyParser)
 require('./config/express')(app, express, config, passport)
 require('./config/routes')(app, passport)
 
@@ -26,6 +26,7 @@ app.use(function (req, res, next) {
   err.status = 404;
   next(err);
 });
+
 
 
 exports = module.exports = app;
