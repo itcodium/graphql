@@ -1,18 +1,17 @@
 
-var express = require('express')
-    , flash = require('connect-flash')
+var flash = require('connect-flash')
     , helpers = require('view-helpers')
 var favicon = require('serve-favicon');
 var path = require('path');
 var session = require('express-session')
-// var mongoStore = require('connect-mongo')(session);
 var cookieParser = require('cookie-parser');
 var methodOverride = require('method-override')
 var compress = require('compression')
 var logger = require('morgan');
 var http = require('http');
+var bodyParser = require('body-parser');
 
-module.exports = function (app, config, passport) {
+module.exports = function (app, express, config, passport) {
 
     var port = normalizePort(process.env.PORT || '5000');
     app.set('port', port);
@@ -75,6 +74,7 @@ module.exports = function (app, config, passport) {
 
     // fin inicializar server
 
+
     app.set('showStackError', true)
 
     app.use(compress({
@@ -113,11 +113,34 @@ module.exports = function (app, config, passport) {
     console.log("_3_dirname", path.join(__dirname, '../public'))
     */
 
+    app.set('views', path.join(config.root, 'views'));
+    app.set('view engine', 'ejs');
+
+    var sessionOpts = {
+        saveUninitialized: true, // saved new sessions
+        resave: false, // do not automatically write to the session store
+        store: store,
+        secret: 'This is a secret yeah!!',
+        cookie: { httpOnly: true, maxAge: 1000 * 60 }
+        // configure when sessions expires 1000 * 60 * 60 * 24 * 7
+    }
+
+    app.use(logger('dev'));
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(cookieParser(sessionOpts.secret));
+    app.use(require('express-session')(sessionOpts));
+
+    app.use(passport.initialize())
+    app.use(passport.session())
+    app.use(flash())
+    app.use(express.static(path.join(config.root, 'public')));
+
     app.enable("jsonp callback")
 
 
     app.use(helpers(config.app.name))
-    app.use(methodOverride())
+    // app.use(methodOverride())
 
     // Session init -------------------------------------------
     console.log("-- config.db --", config.db)
@@ -129,33 +152,42 @@ module.exports = function (app, config, passport) {
             collection: 'app_sessions'
         });
 
-    var sessionOpts = {
-        saveUninitialized: true, // saved new sessions
-        resave: false, // do not automatically write to the session store
-        store: store,
-        secret: 'This is a secret yeah!!',
-        cookie: { httpOnly: true, maxAge: 1000 * 60 }
-        // configure when sessions expires 1000 * 60 * 60 * 24 * 7
-    }
-    app.use(cookieParser(sessionOpts.secret));
-    app.use(require('express-session')(sessionOpts));
-
     // Catch errors
     store.on('error', function (error) {
         assert.ifError(error);
         assert.ok(false);
     });
 
-
-
     // Session End -------------------------------------------
 
 
 
-    app.use(flash())
-    app.use(passport.initialize())
-    app.use(passport.session())
+
+
     app.use(logger('dev'));
+
+    // development error handler
+    // will print stacktrace
+    if (app.get('env') === 'development') {
+        app.use(function (err, req, res, next) {
+            res.status(err.status || 500);
+            res.render('error', {
+                message: err.message,
+                error: err
+            });
+        });
+    }
+
+    // production error handler
+    // no stacktraces leaked to user
+    app.use(function (err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: {}
+        });
+    });
+
 
 
 

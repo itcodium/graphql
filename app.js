@@ -8,35 +8,34 @@ var env = process.env.NODE_ENV || 'development',
   mongoose = require('mongoose')
 
 
-var db = mongoose.connect(config.db, { useNewUrlParser: true, useUnifiedTopology: true }
 
-)
-require('./config/passport')(passport, config)
+
+
+var db = mongoose.connect(config.db, { useNewUrlParser: true, useUnifiedTopology: true })
 
 require('./app/models/books.js')
 require('./app/models/notifications.js')
-
 require('./config/passport')(passport, config)
 
-// SET NODE_ENV=development
 
 var app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-console.log("DIR: ", __dirname + '/static')
-console.log("DIR 2: ", path.join(__dirname, '/static'))
+// (* descoment...) app.use(bodyParser.json());
+// (* descoment...) app.use(bodyParser.urlencoded({ extended: false }));
+
+//console.log("DIR: ", __dirname + '/static')
+//console.log("DIR 2: ", path.join(__dirname, '/static'))
 
 //app.use(express.static(path.join(__dirname, 'public')))
 //app.set('views', path.join(__dirname, 'views'))
 //app.set('view engine', 'ejs')
 
 require('./config/GraphQL/graphql')(app, bodyParser)
-require('./config/express')(app, config, passport)
+require('./config/express')(app, express, config, passport)
 
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-app.use(express.static(path.join(__dirname, 'public')));
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'ejs');
+//app.use(express.static(path.join(__dirname, 'public')));
 
 require('./config/routes')(app, passport)
 
@@ -49,8 +48,10 @@ app.use(function (req, res, next) {
 });
 
 
+/*
 // development error handler
 // will print stacktrace
+
 if (app.get('env') === 'development') {
   app.use(function (err, req, res, next) {
     res.status(err.status || 500);
@@ -70,6 +71,6 @@ app.use(function (err, req, res, next) {
     error: {}
   });
 });
-
+*/
 
 exports = module.exports = app;
