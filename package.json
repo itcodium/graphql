@@ -36,6 +36,7 @@
     "request": "^2.88.0",
     "serve-favicon": "^2.5.0",
     "subscriptions-transport-ws": "^0.9.16",
+    "supertest": "^4.0.2",
     "view-helpers": "^0.1.5"
   },
   "devDependencies": {

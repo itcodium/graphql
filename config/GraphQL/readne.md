@@ -71,5 +71,15 @@ mutation {
 }
 
 
+# subscription
+
+subscription createdMessage{
+  createdMessage{
+ 	_id
+  title
+  }
+ }
+
+
 #### npm install --save graphql-subscriptions http subscriptions-transport-ws cors
 #### npm install --save apollo-link-ws
