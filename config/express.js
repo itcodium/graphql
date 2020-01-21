@@ -1,7 +1,6 @@
 
 var flash = require('connect-flash')
     , helpers = require('view-helpers')
-var favicon = require('serve-favicon');
 var path = require('path');
 var session = require('express-session')
 var cookieParser = require('cookie-parser');
@@ -26,14 +25,7 @@ module.exports = function (app, express, config, passport) {
         return false;
     }
 
-    /*
-        var server = http.createServer(app);
-        server.listen(port);
-
-    */
-    // fin inicializar server
     app.set('showStackError', true)
-
     app.use(compress({
         filter: function (req, res) {
             return /json|text|javascript|css/.test(res.getHeader('Content-Type'));
@@ -41,14 +33,12 @@ module.exports = function (app, express, config, passport) {
         level: 9
     }))
 
-    // app.use(favicon(__dirname + '/public/favicon.ico'));
-
     app.set('views', path.join(config.root, 'views'));
     app.set('view engine', 'ejs');
 
     var sessionOpts = {
         saveUninitialized: true, // saved new sessions
-        resave: false, // do not automatically write to the session store
+        resave: false,           // do not automatically write to the session store
         store: store,
         secret: 'This is a secret yeah!!',
         cookie: { httpOnly: true, maxAge: 1000 * 60 }
@@ -60,7 +50,6 @@ module.exports = function (app, express, config, passport) {
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(cookieParser(sessionOpts.secret));
     app.use(require('express-session')(sessionOpts));
-
     app.use(passport.initialize())
     app.use(passport.session())
     app.use(flash())
@@ -70,24 +59,21 @@ module.exports = function (app, express, config, passport) {
     app.enable("jsonp callback")
     app.use(helpers(config.app.name))
     app.use(methodOverride())
+    app.use(logger('dev'));
 
     // Session init -------------------------------------------
 
     var MongoDBStore = require('connect-mongodb-session')(session);
-    var store = new MongoDBStore(
-        {
-            uri: config.db,
-            collection: 'app_sessions'
-        });
-
+    var store = new MongoDBStore({
+        uri: config.db,
+        collection: 'app_sessions'
+    });
     store.on('error', function (error) {
         assert.ifError(error);
         assert.ok(false);
     });
 
     // Session End -------------------------------------------
-
-    app.use(logger('dev'));
 
     if (app.get('env') === 'development') {
         app.use(function (err, req, res, next) {
