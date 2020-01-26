@@ -11,6 +11,10 @@ var typeDefs = `type Message {
                     read: Boolean
                 }
 				type Query {
+					getGame(_id: ID!): Game
+					getPlayerStatus(_id: ID!): Entity
+					getPlayerCards(_id: ID!): [Card]
+					getMonsterStatus(_id: ID!): Entity
 					getMessage(_id: ID!): Message
 					allMessage: [Message]
 				}
@@ -18,20 +22,39 @@ var typeDefs = `type Message {
 					title: String!
 					description: String!
 				}
+				input GameInput {
+					name: String!
+				}
+				input GamePlayedCard {
+					name: String!
+				}
+				input nameEntityInput {
+					name: String!
+				}
 				type Mutation {
+					createGame (input: GameInput) : Game
+					playTurn (_id: ID!,input: String!) : Game
 					updateMessage(_id: ID!, input: MessageInput): Message
 					createMessage(input: MessageInput) : Message
 					deleteMessage(_id: ID!) : Message
 				}
 				type Subscription {
+					createdGame: Game
+					playedTurn: Game
 					createdMessage: Message
 				}
 
-				enum Cards {
+				enum Card {
                     Heal
                     Damage
                     Shield
                     Horror
+				}
+
+				type Game{
+					_id: ID!
+					player: Entity
+					monster: Entity
 				}
 
 				type Entity{
@@ -40,25 +63,27 @@ var typeDefs = `type Message {
                     hp: Int!
                     shield: Int!
                     turns: Int!
-                    cards: [Cards]
-				}
-
-				type Game{
-					_id: ID!
-					player: Entity!
-					moster:	Entity!
+					cards: [Card]
+					hands: [Card]
 				}`;
 
 
 
 /*
 
-- Get game
-- Create new game
-- Get current status from player from game
-- Get current status monster from game
+
+API Doc
+Required endponts:
+
+-(OK) Get game
+-(OK) Get current status from player from game
+-(OK) Get current status monster from game
 - Get player’s cards
+- Create new game
+
 - Play next turn
+This endpoint could be called without a card. Also, returns the game entity and "monsterEffect". The last one indicates what the monster did in this turn.
+
 
 
 - Create Game

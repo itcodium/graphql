@@ -1,4 +1,160 @@
 
+# GAME
+
+
+##1 Create
+
+  mutation {
+    createGame(input: {
+        name: "TEST_NAME_0002"
+    }) {
+        _id
+        player {
+            _id
+            name
+            hp
+            shield
+            turns
+            cards
+        }
+        monster {
+            _id
+            name
+            hp
+            shield
+            turns
+            cards
+            hands
+        }
+    }
+}
+
+
+#2 GetGame
+  {
+    getGame(
+        _id:"5e2e04c8d5e0fe1c603bb61f"
+    )  {
+         _id
+      player{
+				_id
+				name
+        hp
+        shield
+        turns
+				cards
+       }
+       monster{
+				_id
+				name
+        hp
+        shield
+        turns
+				cards
+        hands
+       }
+      }
+  }
+
+## GetPlayer Status
+  {
+    getPlayerStatus(
+        _id:"5e2e1d754085ca1eacbdb6d5"
+    )  {
+         _id
+      	name
+        hp
+        shield
+        turns
+				cards
+
+      }
+  }
+
+## GetPlayer Cards
+
+  {
+    getPlayerCards(
+      _id:"5e2e1d754085ca1eacbdb6d5"
+    )
+  }
+
+## GetMonster Status
+  {
+    getMonsterStatus(
+        _id:"5e2e1d754085ca1eacbdb6d5"
+    )  {
+         _id
+      	name
+        hp
+        shield
+        turns
+				cards
+      }
+  }
+
+#3 Play Turn
+
+mutation {
+    playTurn(
+        _id: "5e2e04c8d5e0fe1c603bb61f",input: "Heal") {
+        _id
+        player {
+            _id
+            name
+            hp
+            shield
+            turns
+            cards
+        }
+        monster {
+            _id
+            name
+            hp
+            shield
+            turns
+            cards
+            hands
+        }
+    }
+}
+
+
+
+#2 subscription
+
+subscription createdGame{
+  createdGame {
+        _id
+      player{
+				_id
+				name
+        hp
+        shield
+        turns
+				cards
+       }
+       monster{
+				_id
+				name
+        hp
+        shield
+        turns
+				cards
+       }
+    }
+ }
+
+#### npm install --save graphql-subscriptions http subscriptions-transport-ws cors
+#### npm install --save apollo-link-ws
+
+
+#### https://bons-web.webflow.io/challenge/backend-nodejs-challenge
+
+
+
+----------------------------------------------------------------------------------------------
+
 #1 Create
 
     mutation{
@@ -79,7 +235,3 @@ subscription createdMessage{
   title
   }
  }
-
-
-#### npm install --save graphql-subscriptions http subscriptions-transport-ws cors
-#### npm install --save apollo-link-ws

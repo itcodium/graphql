@@ -31,4 +31,12 @@ module.exports = function (app, passport) {
     app.post('/api/message', cMessage.create);
     app.put('/api/message/:id', cMessage.update);
     app.delete('/api/message/:id', cMessage.delete);
+
+    var cGame = require('../app/controllers/game')
+    app.get('/api/game', cGame.getAll);
+    //app.get('/api/game/:idGame', cGame.getById);
+    //app.param('idGame', cGame.item);
+    //app.post('/api/game', cGame.create);
+    //app.put('/api/game/:id', cGame.update);
+    //app.delete('/api/game/:id', cGame.delete);
 }
