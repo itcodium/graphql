@@ -34,6 +34,7 @@ let EntitySchema = new Schema({
 });
 
 let GameSchema = new mongoose.Schema({
+    monsterEffect: { type: String },
     player: { type: Schema.Types.ObjectId, ref: 'Entity' },
     monster: { type: Schema.Types.ObjectId, ref: 'Entity' },
 });

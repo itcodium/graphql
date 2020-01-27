@@ -4,30 +4,33 @@
 
 ##1 Create
 
-  mutation {
-    createGame(input: {
-        name: "TEST_NAME_0002"
-    }) {
-        _id
-        player {
-            _id
-            name
-            hp
-            shield
-            turns
-            cards
-        }
-        monster {
-            _id
-            name
-            hp
-            shield
-            turns
-            cards
-            hands
-        }
-    }
-}
+     mutation{
+      createGame (input:{
+          name:"TEST_NAME_0003"
+      })
+      {
+         _id
+        monsterEffect
+      player{
+				_id
+				name
+        hp
+        shield
+        turns
+				cards
+        hands
+       }
+       monster{
+				_id
+				name
+        hp
+        shield
+        turns
+				cards
+        hands
+       }
+      }
+  }
 
 
 #2 GetGame
@@ -36,6 +39,7 @@
         _id:"5e2e04c8d5e0fe1c603bb61f"
     )  {
          _id
+         monsterEffect
       player{
 				_id
 				name
@@ -43,6 +47,7 @@
         shield
         turns
 				cards
+        hands
        }
        monster{
 				_id
@@ -67,6 +72,7 @@
         shield
         turns
 				cards
+        hands
 
       }
   }
@@ -90,15 +96,17 @@
         shield
         turns
 				cards
+        hands
       }
   }
 
 #3 Play Turn
 
-mutation {
+subscription playedTurn{
     playTurn(
-        _id: "5e2e04c8d5e0fe1c603bb61f",input: "Heal") {
+        _id: "5e2e32986105241928759421",input: "Heal") {
         _id
+        monsterEffect
         player {
             _id
             name
@@ -106,6 +114,7 @@ mutation {
             shield
             turns
             cards
+            hands
         }
         monster {
             _id
@@ -118,14 +127,38 @@ mutation {
         }
     }
 }
-
+}
 
 
 #2 subscription
 
 subscription createdGame{
+  playedTurn {
+        _id
+        monsterEffect
+      player{
+				_id
+				name
+        hp
+        shield
+        turns
+				cards
+       }
+       monster{
+				_id
+				name
+        hp
+        shield
+        turns
+				cards
+       }
+    }
+ }
+
+subscription createdGame{
   createdGame {
         _id
+        monsterEffect
       player{
 				_id
 				name

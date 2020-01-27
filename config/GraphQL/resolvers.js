@@ -41,31 +41,20 @@ module.exports = {
             var game = await Game.findById(_id).populate("monster")
             return game.monster;
         },
-
-        async getMessage (root, {
-            _id
-        }) {
-            return await Message.findById(_id);
-        },
-        async allMessage () {
-            return await Message.find();
-        }
     },
     Mutation: {
-        // Game
         async createGame (root, {
             input
         }) {
 
             var initParams = {
                 name: input.name,
-                hp: 12,
-                shield: 12,
+                hp: 10,
+                shield: 10,
                 turns: 12,
                 cards: GameAI.getCards(),
                 hands: []
             }
-
             var player = await Entity.create(initParams);
             initParams.name = "monster";
             var monster = await Entity.create(initParams);
@@ -73,71 +62,82 @@ module.exports = {
             var game = await Game.create({ player: player, monster: monster });
             pubsub.publish(NOTIFICATION_CREATED_GAME, { createdGame: game });
             return game;
-
         },
         // Play Turn
         async playTurn (root, {
             _id,
             input
         }) {
-            var cards = GameAI.Game;
-            console.log('[cards]', GameAI.cards);
-            //console.log('cards 1: ', GameAI.getCards());
-            //console.log('cards 2: ', GameAI.getCards());
-
-            console.log('input (playTurn):', input);
             var game = await Game.findById(_id).populate("player").populate("monster");
-            GameAI.userPlay(game, input)
+            GameAI.userPlay(game, input);
+            const player = await Entity.findOne(game.player._id);
+            player.overwrite(game.player);
+            await player.save();
 
-            /*var game = await Game.findOneAndUpdate({
-                _id
-            }, input, {
-                    new: true
-                });
-                */
+            const monster = await Entity.findOne(game.monster._id);
+            monster.overwrite(game.monster);
+            await monster.save();
 
-            // pubsub.publish(NOTIFICATION_UPDATED_GAME, { updatedGame: game });
+            GameAI.monsterPlay(game);
+            const player2 = await Entity.findOne(game.player._id);
+            player2.overwrite(game.player);
+            await player2.save();
 
+            const monster2 = await Entity.findOne(game.monster._id);
+            monster2.overwrite(game.monster);
+            await monster2.save();
+
+            pubsub.publish(NOTIFICATION_UPDATED_GAME, { playedTurn: game });
+            console.log('game: ', game);
+            await game.save();
             return game;
-        },
-
-        async createMessage (root, {
-            input
-        }) {
-            var message = await Message.create(input);
-            pubsub.publish(NOTIFICATION_SUBSCRIPTION_TOPIC, { createdMessage: message });
-            return message;
 
         },
-        async updateMessage (root, {
-            _id,
-            input
-        }) {
-            return await Message.findOneAndUpdate({
-                _id
-            }, input, {
-                    new: true
-                })
-        },
-        async deleteMessage (root, {
-            _id
-        }) {
-            return await Message.findOneAndDelete({
-                _id
-            });
-        }
     },
     Subscription: {
-        createdMessage: {
-            subscribe: () => pubsub.asyncIterator(NOTIFICATION_SUBSCRIPTION_TOPIC)
-        },
-        // Game
         createdGame: {
             subscribe: () => pubsub.asyncIterator(NOTIFICATION_CREATED_GAME)
         },
         playedTurn: {
-            subscribe: () => pubsub.asyncIterator(NOTIFICATION_CREATED_GAME)
+            subscribe: () => pubsub.asyncIterator(NOTIFICATION_UPDATED_GAME)
         }
 
     },
 };
+
+
+
+/*
+
+    async createMessage (root, {
+             input
+         }) {
+             var message = await Message.create(input);
+             pubsub.publish(NOTIFICATION_SUBSCRIPTION_TOPIC, { createdMessage: message });
+             return message;
+         },
+         async updateMessage (root, {
+             _id,
+             input
+         }) {
+             return await Message.findOneAndUpdate({
+                 _id
+             }, input, {
+                     new: true
+                 })
+         },
+         async deleteMessage (root, {
+             _id
+         }) {
+             return await Message.findOneAndDelete({
+                 _id
+             });
+         }
+
+Subscription
+
+        createdMessage: {
+            subscribe: () => pubsub.asyncIterator(NOTIFICATION_SUBSCRIPTION_TOPIC)
+        },
+
+*/

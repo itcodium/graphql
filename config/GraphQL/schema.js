@@ -1,47 +1,21 @@
 
 
-var typeDefs = `type Message {
-                    _id: ID!
-                    title: String!
-                    description: String!
-                    link: String
-                    category: String
-                    category_str: String
-                    inner_id: String
-                    read: Boolean
-                }
-				type Query {
+var typeDefs = `type Query {
 					getGame(_id: ID!): Game
+					getMonsterStatus(_id: ID!): Entity
 					getPlayerStatus(_id: ID!): Entity
 					getPlayerCards(_id: ID!): [Card]
-					getMonsterStatus(_id: ID!): Entity
-					getMessage(_id: ID!): Message
-					allMessage: [Message]
-				}
-				input MessageInput {
-					title: String!
-					description: String!
 				}
 				input GameInput {
-					name: String!
-				}
-				input GamePlayedCard {
-					name: String!
-				}
-				input nameEntityInput {
 					name: String!
 				}
 				type Mutation {
 					createGame (input: GameInput) : Game
 					playTurn (_id: ID!,input: String!) : Game
-					updateMessage(_id: ID!, input: MessageInput): Message
-					createMessage(input: MessageInput) : Message
-					deleteMessage(_id: ID!) : Message
 				}
 				type Subscription {
 					createdGame: Game
 					playedTurn: Game
-					createdMessage: Message
 				}
 
 				enum Card {
@@ -53,6 +27,7 @@ var typeDefs = `type Message {
 
 				type Game{
 					_id: ID!
+					monsterEffect:Card
 					player: Entity
 					monster: Entity
 				}
