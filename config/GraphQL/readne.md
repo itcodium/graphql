@@ -127,7 +127,7 @@ subscription playedTurn{
         }
     }
 }
-}
+
 
 
 #2 subscription
