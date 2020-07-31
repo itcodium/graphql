@@ -1,3 +1,3 @@
 git add .
-git commit -m "Graphql apollo-server, se actualiza puerto (v2)"
+git commit -m "Se agrega api openstream y se habilita cors"
 git push

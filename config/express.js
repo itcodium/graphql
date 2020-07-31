@@ -9,12 +9,13 @@ var compress = require('compression')
 var logger = require('morgan');
 var http = require('http');
 var bodyParser = require('body-parser');
+var cors = require('cors')
 
 module.exports = function (app, express, config, passport) {
 
     var port = normalizePort(process.env.PORT || '4000');
     app.set('port', port);
-    function normalizePort (val) {
+    function normalizePort(val) {
         var port = parseInt(val, 10);
         if (isNaN(port)) {
             return val;
@@ -31,7 +32,7 @@ module.exports = function (app, express, config, passport) {
             return /json|text|javascript|css/.test(res.getHeader('Content-Type'));
         },
         level: 9
-    }))
+    }));
 
     app.set('views', path.join(config.root, 'views'));
     app.set('view engine', 'ejs');
@@ -50,15 +51,16 @@ module.exports = function (app, express, config, passport) {
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(cookieParser(sessionOpts.secret));
     app.use(require('express-session')(sessionOpts));
-    app.use(passport.initialize())
-    app.use(passport.session())
-    app.use(flash())
+    app.use(passport.initialize());
+    app.use(passport.session());
+    app.use(flash());
+    app.use(cors());
 
     /* Static Files */
     app.use(express.static(path.join(config.root, 'public')));
-    app.enable("jsonp callback")
-    app.use(helpers(config.app.name))
-    app.use(methodOverride())
+    app.enable("jsonp callback");
+    app.use(helpers(config.app.name));
+    app.use(methodOverride());
     app.use(logger('dev'));
 
     // Session init -------------------------------------------
