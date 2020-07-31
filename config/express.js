@@ -9,7 +9,6 @@ var compress = require('compression')
 var logger = require('morgan');
 var http = require('http');
 var bodyParser = require('body-parser');
-var cors = require('cors')
 
 module.exports = function (app, express, config, passport) {
 
@@ -46,6 +45,11 @@ module.exports = function (app, express, config, passport) {
         // configure when sessions expires 1000 * 60 * 60 * 24 * 7
     }
 
+    app.use(function (req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+    });
     app.use(logger('dev'));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
@@ -54,7 +58,6 @@ module.exports = function (app, express, config, passport) {
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(flash());
-    app.use(cors());
 
     /* Static Files */
     app.use(express.static(path.join(config.root, 'public')));
