@@ -43,13 +43,14 @@ module.exports = function (app, express, config, passport) {
         secret: 'This is a secret yeah!!',
         cookie: { httpOnly: true, maxAge: 1000 * 60 }
         // configure when sessions expires 1000 * 60 * 60 * 24 * 7
-    }
+    };
 
     app.use(function (req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         next();
     });
+
     app.use(logger('dev'));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));

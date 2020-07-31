@@ -15,20 +15,6 @@ require('./app/models/message.js');
 require('./config/passport')(passport, config);
 
 var app = express();
-/*
-const whitelist = ['http://172.21.34.161', 'http://dev.adm.dlatv.net', 'http://localhost:81', 'http://localhost'];
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-};
-app.options('*', cors());
-app.use(cors(corsOptions));*/
-
 app.options('*', cors());
 
 require('./config/GraphQL/graphql')(app, express, bodyParser);
