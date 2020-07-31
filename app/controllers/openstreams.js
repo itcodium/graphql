@@ -33,10 +33,13 @@ exports.getAll = function (req, res) {
                 }
                 res.jsonp(
                     {
-                        result: data,
-                        current: page,
-                        recordsTotal: count,
-                        recordsFiltered: count
+                        response: {
+                            code: 0,
+                            result: { openstreams: data },
+                            current: page,
+                            recordsTotal: count,
+                            recordsFiltered: count
+                        }
                     }
                 );
             })

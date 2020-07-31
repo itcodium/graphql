@@ -1,7 +1,6 @@
 var async = require('async')
     , http = require('http')
     , fs = require('fs');
-var cors = require('cors')
 
 module.exports = function (app, passport) {
     /*
@@ -17,12 +16,12 @@ module.exports = function (app, passport) {
 
     var cOpenStreams = require('../app/controllers/openstreams')
 
-    app.get('/api/openstreams', cors(), cOpenStreams.getAll);
-    app.get('/api/openstreams/:idOpenstreams', cors(), cOpenStreams.getById);
+    app.get('/api/openstreams', cOpenStreams.getAll);
+    app.get('/api/openstreams/:idOpenstreams', cOpenStreams.getById);
     app.param('idOpenstreams', cOpenStreams.item);
-    app.post('/api/openstreams', cors(), cOpenStreams.create);
-    app.put('/api/openstreams/:id', cors(), cOpenStreams.update);
-    app.delete('/api/openstreams/:id', cors(), cOpenStreams.delete);
+    app.post('/api/openstreams', cOpenStreams.create);
+    app.put('/api/openstreams/:id', cOpenStreams.update);
+    app.delete('/api/openstreams/:id', cOpenStreams.delete);
 
     var cBook = require('../app/controllers/books')
 
