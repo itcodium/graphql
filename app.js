@@ -10,6 +10,7 @@ var env = process.env.NODE_ENV || 'development',
 var db = mongoose.connect(config.db, { useNewUrlParser: true, useUnifiedTopology: true });
 
 require('./app/models/books.js');
+require('./app/models/openstreams.js');
 require('./app/models/message.js');
 require('./config/passport')(passport, config);
 
