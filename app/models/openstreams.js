@@ -18,7 +18,7 @@ let OpenStreamsSchema = new Schema(
         liveref: { type: String, required: true },
         node_name: { type: String, required: true },
         createdAt: { type: Date, default: Date.now },
-        user_name: { type: String },
+        user_name: { type: String, required: true },
     },
     {
         versionKey: false
