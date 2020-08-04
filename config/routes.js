@@ -14,7 +14,7 @@ module.exports = function (app, passport) {
         res.render('home', { title: 'Notificaciones' });
     });
 
-    var cOpenStreams = require('../app/controllers/openstreams')
+    var cOpenStreams = require('../app/controllers/openstreams');
 
     app.get('/api/openstreams', cOpenStreams.getAll);
     app.get('/api/openstreams/:idOpenstreams', cOpenStreams.getById);
@@ -22,6 +22,9 @@ module.exports = function (app, passport) {
     app.post('/api/openstreams', cOpenStreams.create);
     app.put('/api/openstreams/:id', cOpenStreams.update);
     app.delete('/api/openstreams/:id', cOpenStreams.delete);
+
+    var cPayway = require('../app/controllers/payway');
+    app.get('/api/payway', cPayway.getAll);
 
     var cBook = require('../app/controllers/books')
 
