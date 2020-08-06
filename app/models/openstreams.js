@@ -6,8 +6,8 @@ let Schema = mongoose.Schema;
 let OpenStreamsSchema = new Schema(
     {
         bss_code: { type: String, required: true },
-        start_date: { type: Number },
-        end_date: { type: Number },
+        start_date: { type: Number, required: true },
+        end_date: { type: Number, required: true },
         operator_id: { type: Number },
         status: { type: Number },
         image_url: { type: String, required: true },
