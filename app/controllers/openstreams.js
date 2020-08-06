@@ -65,7 +65,7 @@ exports.create = function (req, res) {
             if (err) {
                 return res.send({ status: "error", errors: err.message });
             }
-            res.json({ status: "ok", message: "item successfully added!", item });
+            res.json([{ result: { msg: 'OK', data: item } }]);
         });
     }
     catch (err) {
@@ -81,7 +81,7 @@ exports.update = function (req, res) {
             if (err) {
                 return res.send({ status: "error", errors: err.message });
             }
-            res.json({ message: 'item updated!', item });
+            res.json([{ result: { msg: 'OK', data: item } }]);
         });
     });
 
