@@ -1,27 +1,21 @@
 
 var mongoose = require('mongoose');
-var async = require('async')
-    , OpenStreams = mongoose.model('OpenStreams')
+var async = require('async'),
+    OpenStreams = mongoose.model('OpenStreams');
 
 exports.getAll = function (req, res) {
-
-    // http://localhost:4000/api/item?query={"order":[{"column":0}],"columns":["_id"],"length":5,"start":0}
-    var query = JSON.parse(req.query.query);
-    console.log('query: ', typeof query, query, query.order);
     var order = {};
-    var index = query.order[0].column;
-    var name = query.columns[index].data;
-
-    if (name) {
+    if (req.query.column) {
         try {
-            order = JSON.parse("{\"" + name + "\":\"" + query.order[0].dir + "\"}");
+            order = req.query.dir + req.query.column;
         }
         catch (err) {
             res.status(500).jsonp({ "message": err.message });
         }
     }
-    var perPage = parseInt(query.length);
-    var page = parseInt(query.start);
+    var perPage = parseInt(req.query.pagesize);
+    var page = (parseInt(req.query.page) - 1) * perPage;
+
     OpenStreams.find({})
         .sort(order)
         .skip(page)
@@ -44,7 +38,7 @@ exports.getAll = function (req, res) {
                 );
             })
         })
-}
+};
 
 exports.item = function (req, res, next, id) {
     console.log("OpenStreams id: ", id)
