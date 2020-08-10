@@ -7,7 +7,9 @@ exports.getAll = function (req, res) {
     var order = {};
     if (req.query.column) {
         try {
-            order = req.query.dir + req.query.column;
+            var sort = req.query.dir == "+" ? "1" : "-1";
+            order = JSON.parse("{\"" + req.query.column + "\":\"" + sort + "\"}");
+            console.log('req.query.dir: ', order);
         }
         catch (err) {
             res.status(500).jsonp({ "message": err.message });
