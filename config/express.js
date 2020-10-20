@@ -72,9 +72,10 @@ module.exports = function (app, express, config, passport) {
     var MongoDBStore = require('connect-mongodb-session')(session);
     var store = new MongoDBStore({
         uri: config.db,
-        collection: 'app_sessions'
+        collection: 'app_sessions',
     });
     store.on('error', function (error) {
+        console.log("MongoDBStore",error)
         assert.ifError(error);
         assert.ok(false);
     });
