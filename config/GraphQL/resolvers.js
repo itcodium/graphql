@@ -1,16 +1,12 @@
 
-var Message = require('../../app/models/message');
 var Game = require('../../app/models/game').Game;
 var Entity = require('../../app/models/game').Entity;
 var GameAI = require('../../app/controllers/game');
 
 const { PubSub } = require('graphql-subscriptions');
 const pubsub = new PubSub();
-const NOTIFICATION_SUBSCRIPTION_TOPIC = 'newMessage';
 const NOTIFICATION_CREATED_GAME = 'newGame';
 const NOTIFICATION_UPDATED_GAME = 'updatedGame';
-
-
 
 module.exports = {
     Query: {
@@ -104,40 +100,3 @@ module.exports = {
 
     },
 };
-
-
-
-/*
-
-    async createMessage (root, {
-             input
-         }) {
-             var message = await Message.create(input);
-             pubsub.publish(NOTIFICATION_SUBSCRIPTION_TOPIC, { createdMessage: message });
-             return message;
-         },
-         async updateMessage (root, {
-             _id,
-             input
-         }) {
-             return await Message.findOneAndUpdate({
-                 _id
-             }, input, {
-                     new: true
-                 })
-         },
-         async deleteMessage (root, {
-             _id
-         }) {
-             return await Message.findOneAndDelete({
-                 _id
-             });
-         }
-
-Subscription
-
-        createdMessage: {
-            subscribe: () => pubsub.asyncIterator(NOTIFICATION_SUBSCRIPTION_TOPIC)
-        },
-
-*/

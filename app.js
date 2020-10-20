@@ -11,8 +11,7 @@ var db = mongoose.connect(config.db, { useNewUrlParser: true, useUnifiedTopology
 
 require('./app/models/books.js');
 require('./app/models/openstreams.js');
-require('./app/models/payway.js');
-require('./app/models/message.js');
+require('./app/models/timer.js');
 require('./config/passport')(passport, config);
 
 var app = express();
