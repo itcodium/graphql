@@ -42,7 +42,7 @@ module.exports = function (app, express, config, passport) {
         store: store,
         secret: 'This is a secret yeah!!',
         cookie: { httpOnly: true, maxAge: 1000 * 60 }
-        // configure when sessions expires 1000 * 60 * 60 * 24 * 7
+        // configure when sessions expires 1000 * 60 * 60 * 24 * 7 // example
     };
 
     app.use(function (req, res, next) {
@@ -79,7 +79,6 @@ module.exports = function (app, express, config, passport) {
         assert.ifError(error);
         assert.ok(false);
     });
-
     // Session End -------------------------------------------
 
     if (app.get('env') === 'development') {
