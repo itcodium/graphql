@@ -42,7 +42,7 @@ module.exports = function (app, express, config, passport) {
         store: store,
         secret: 'This is a secret yeah!!',
         cookie: { httpOnly: true, maxAge: 1000 * 60 }
-        // configure when sessions expires 1000 * 60 * 60 * 24 * 7 // example
+        // configure when sessions expires 1000 * 60 * 60 * 24 * 7
     };
 
     app.use(function (req, res, next) {
@@ -73,12 +73,14 @@ module.exports = function (app, express, config, passport) {
     var store = new MongoDBStore({
         uri: config.db,
         collection: 'app_sessions',
+        useCreateIndex:true
     });
     store.on('error', function (error) {
         console.log("MongoDBStore",error)
         assert.ifError(error);
         assert.ok(false);
     });
+
     // Session End -------------------------------------------
 
     if (app.get('env') === 'development') {
