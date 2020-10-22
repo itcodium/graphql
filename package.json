@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start-dev": "concurrently --kill-others-on-fail \" npm run server \" \"cd .. && cd react-material-ui   && npm run start\"",
+    "start-dev": "concurrently --kill-others-on-fail \" npm run start \" \"cd .. && cd react-material-ui   && npm run start\"",
     "start": "node app.js",
     "test": "mocha app/test",
     "test:browser": "live-server --port=9000 --mount=/:public/test"

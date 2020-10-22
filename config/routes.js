@@ -1,5 +1,5 @@
 
-module.exports = function (app, passport) {
+module.exports = function (app, passport,cors) {
     app.get('/', function (req, res, next) {
         res.render('home', { title: 'Notificaciones' });
     });
@@ -13,7 +13,7 @@ module.exports = function (app, passport) {
     app.delete('/api/openstreams/:id', cOpenStreams.delete);
 
     var cTimer = require('../app/controllers/timer');
-    app.get('/api/timer', cTimer.getAll);
+    app.get('/api/timer', cors(),cTimer.getAll);
     app.get('/api/timer/:idTimer', cTimer.getById);
     app.param('idTimer', cTimer.item);
     app.post('/api/timer', cTimer.create);

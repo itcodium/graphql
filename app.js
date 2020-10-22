@@ -15,11 +15,11 @@ require('./app/models/timer.js');
 require('./config/passport')(passport, config);
 
 var app = express();
-app.options('*', cors());
+app.use(cors());
 
 require('./config/GraphQL/graphql')(app, express, bodyParser);
 require('./config/express')(app, express, config, passport);
-require('./config/routes')(app, passport);
+require('./config/routes')(app, passport,cors);
 
 app.use(function (req, res, next) {
   var err = new Error('Not Found ' + req.originalUrl);
