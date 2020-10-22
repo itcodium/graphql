@@ -14,11 +14,11 @@ module.exports = function (app, passport,cors) {
 
     var cTimer = require('../app/controllers/timer');
     app.get('/api/timer', cors(),cTimer.getAll);
-    app.get('/api/timer/:idTimer', cTimer.getById);
-    app.param('idTimer', cTimer.item);
-    app.post('/api/timer', cTimer.create);
-    app.put('/api/timer/:id', cTimer.update);
-    app.delete('/api/timer/:id', cTimer.delete);
+    app.get('/api/timer/:idTimer',cors(), cTimer.getById);
+    app.param('idTimer', cors(),cTimer.item);
+    app.post('/api/timer', cors(),cTimer.create);
+    app.put('/api/timer/:id', cors(),cTimer.update);
+    app.delete('/api/timer/:id', cors(),cTimer.delete);
 
     var cBook = require('../app/controllers/books')
     app.get('/api/book', cBook.getAll);
