@@ -85,10 +85,6 @@ exports.delete = function (req, res) {
     });
 }
 exports.start = function (req, res) {
-     console.log("req.item.elapsed",req.item.elapsed)
-   console.log("req.item.runningSince",req.item.runningSince)
-   console.log("req.body.start", req.body.start);
-   
     req.item.runningSince=req.body.start;
     req.item.save((err, item) => {
         if (err) {
