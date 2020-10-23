@@ -44,7 +44,6 @@ exports.getAll = function (req, res) {
 }
 
 exports.item = function (req, res, next, id) {
-    console.log("Books id: ", id)
     Books.findById(id, function (err, item) {
         if (err) { return next(err); }
         if (!item) { return res.json({ status: "error", errors: "No se encontro el registro." }); }

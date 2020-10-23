@@ -7,6 +7,7 @@ let TimerSchema = new Schema(
         title: { type: String, required: true },
         project: { type: String, required: true },
         elapsed: { type: Number, required: true },
+        runningSince: { type: Number, required: false },
         createdAt: { type: Date, default: Date.now },
         user_name: { type: String, required: false },
     },

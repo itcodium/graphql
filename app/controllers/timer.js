@@ -42,10 +42,11 @@ exports.getAll = function (req, res) {
 };
 
 exports.item = function (req, res, next, id) {
-    console.log("Timers id: ", id)
+    console.log("item: ",id)
     Timers.findById(id, function (err, item) {
         if (err) { return next(err); }
         if (!item) { return res.json({ status: "error", errors: "No se encontro el registro." }); }
+        console.log(id);
         req.item = item;
         return next();
     })
@@ -68,18 +69,12 @@ exports.create = function (req, res) {
     }
 }
 exports.update = function (req, res) {
-    Timers.findById({ _id: req.params.id }, (err, item) => {
+    Object.assign(req.item, req.body).save((err, item) => {
         if (err) {
             return res.send({ status: "error", errors: err.message });
         }
-        Object.assign(item, req.body).save((err, item) => {
-            if (err) {
-                return res.send({ status: "error", errors: err.message });
-            }
-            res.json([{ result: { msg: 'OK', data: item } }]);
-        });
+        res.json([{ result: { msg: 'OK', data: item } }]);
     });
-
 }
 exports.delete = function (req, res) {
     Timers.remove({ _id: req.params.id }, (err, result) => {
@@ -87,5 +82,29 @@ exports.delete = function (req, res) {
             return res.send({ status: "error", errors: err.message });
         }
         res.json({ status: "ok", message: "Timers successfully deleted!" });
+    });
+}
+exports.start = function (req, res) {
+     console.log("req.item.elapsed",req.item.elapsed)
+   console.log("req.item.runningSince",req.item.runningSince)
+   console.log("req.body.start", req.body.start);
+   
+    req.item.runningSince=req.body.start;
+    req.item.save((err, item) => {
+        if (err) {
+            return res.send({ status: "error", errors: err.message });
+        }
+        res.json([{ result: { msg: 'OK', data: item } }]);
+    });
+}
+exports.stop = function (req, res) {
+   const lastElapsed = req.body.stop - req.item.runningSince;
+   req.item.elapsed= req.item.elapsed + lastElapsed,
+   req.item.runningSince=null;
+   req.item.save((err, item) => {
+        if (err) {
+            return res.send({ status: "error", errors: err.message });
+        }
+        res.json([{ result: { msg: 'OK', data: item } }]);
     });
 }

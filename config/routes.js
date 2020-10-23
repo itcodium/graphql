@@ -14,8 +14,10 @@ module.exports = function (app, passport,cors) {
 
     var cTimer = require('../app/controllers/timer');
     app.get('/api/timer', cors(),cTimer.getAll);
-    app.get('/api/timer/:idTimer',cors(), cTimer.getById);
-    app.param('idTimer', cors(),cTimer.item);
+    app.param('id',cTimer.item);
+    app.get('/api/timer/:id',cors(), cTimer.getById);
+    app.post('/api/timer/:id/start', cors(),cTimer.start);
+    app.post('/api/timer/:id/stop', cors(),cTimer.stop);
     app.post('/api/timer', cors(),cTimer.create);
     app.put('/api/timer/:id', cors(),cTimer.update);
     app.delete('/api/timer/:id', cors(),cTimer.delete);
