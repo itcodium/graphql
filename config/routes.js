@@ -1,7 +1,11 @@
-
+var path = require('path');
 module.exports = function (app, passport,cors) {
-    app.get('/', function (req, res, next) {
+    /*app.get('/', function (req, res, next) {
         res.render('home', { title: 'Notificaciones' });
+    });*/
+
+    app.get('/', function (req, res) {
+        res.sendFile(path.join(__dirname+ '/public/index.html'));
     });
 
     var cOpenStreams = require('../app/controllers/openstreams');

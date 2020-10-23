@@ -61,6 +61,7 @@ module.exports = function (app, express, config, passport) {
     app.use(methodOverride());
     app.use(logger('dev'));
 
+
     // Session init -------------------------------------------
 
     var MongoDBStore = require('connect-mongodb-session')(session);
