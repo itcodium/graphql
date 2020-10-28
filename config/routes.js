@@ -27,12 +27,12 @@ module.exports = function (app, passport,cors) {
     app.delete('/api/timer/:id', cors(),cTimer.delete);
 
     var cBook = require('../app/controllers/books')
-    app.get('/api/book', cBook.getAll);
+    app.get('/api/book',cors(), cBook.getAll);
     app.get('/api/book/:idBook', cBook.getById);
-    app.param('idBook', cBook.item);
-    app.post('/api/book', cBook.create);
-    app.put('/api/book/:id', cBook.update);
-    app.delete('/api/book/:id', cBook.delete);
+    app.param('idBook',cors(), cBook.item);
+    app.post('/api/book',cors(), cBook.create);
+    app.put('/api/book/:id',cors(), cBook.update);
+    app.delete('/api/book/:id',cors(), cBook.delete);
    
     var cGame = require('../app/controllers/game')
     app.get('/api/game', cGame.getAll);
