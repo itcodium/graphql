@@ -3,25 +3,21 @@ var mongoose = require('mongoose');
 var async = require('async')
     , Books = mongoose.model('Book')
 
+
 exports.getAll = function (req, res) {
-
-    // http://localhost:4000/api/book?query={"order":[{"column":0}],"columns":["_id"],"length":5,"start":0}
-    var query = JSON.parse(req.query.query);
-    console.log('query: ', typeof query, query, query.order);
     var order = {};
-    var index = query.order[0].column;
-    var name = query.columns[index].data;
-
-    if (name) {
+    if (req.query.column) {
         try {
-            order = JSON.parse("{\"" + name + "\":\"" + query.order[0].dir + "\"}");
+            var sort = req.query.order == "1" ? "1" : "-1";
+            order = JSON.parse("{\"" + req.query.column + "\":\"" + sort + "\"}");
         }
         catch (err) {
             res.status(500).jsonp({ "message": err.message });
         }
     }
-    var perPage = parseInt(query.length);
-    var page = parseInt(query.start);
+    var perPage = parseInt(req.query.pagesize);
+    var page = (parseInt(req.query.page) - 1) * perPage;
+
     Books.find({})
         .sort(order)
         .skip(page)
@@ -29,19 +25,22 @@ exports.getAll = function (req, res) {
         .exec(function (err, data) {
             Books.countDocuments().exec(function (err, count) {
                 if (err) {
-                    res.status(500).jsonp({ "message": err.message });
+                    res.status(500).jsonp({ error: err.message });
                 }
                 res.jsonp(
                     {
-                        result: data,
-                        current: page,
-                        recordsTotal: count,
-                        recordsFiltered: count
+                        response: {
+                            code: 0,
+                            result: data,
+                            current: page,
+                            recordsTotal: count,
+                            recordsFiltered: count
+                        }
                     }
                 );
             })
         })
-}
+};
 
 exports.item = function (req, res, next, id) {
     Books.findById(id, function (err, item) {
@@ -59,13 +58,13 @@ exports.create = function (req, res) {
         var item = new Books(req.body);
         item.save(function (err, book) {
             if (err) {
-                return res.send({ status: "error", errors: err.message });
+                return res.status(500).json({success: false, error: err.message});
             }
             res.json({ status: "ok", message: "Book successfully added!", book });
         });
     }
     catch (err) {
-        return res.send({ status: "error", errors: err.message });
+        return res.status(500).json({success: false, error: err.message});
     }
 }
 exports.update = function (req, res) {
