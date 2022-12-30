@@ -46,6 +46,6 @@
     "nodemon": "^2.0.6",
     "supertest": "^4.0.2",
     "live-server": "^1.2.1",
-    "mocha": "^6.2.3"
+    "mocha": "^10.2.0"
   }
 }
